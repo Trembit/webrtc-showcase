@@ -2,14 +2,13 @@ Bootstrap Meetings
 ==================
 
 This is Play Framework application with Scala | Akka | WebSockets.
-Nowadays all web conferences web software is built with Adobe Flash or desktop app (Adobe Connect, Gotomeeting). This is attempt to check js abilities to achieve the same.
-Past RTMP calls + Flash Media Server Video Streaming replaced with WebSockets + WebRTC p2p video.
+It connects users with kurento media server to implement video chat experience.
 
 ### Features
  - Users presence
  - Chat
  - Multi-user Video Chat with WebRTC 
- - Kurento to handle user crowd
+ - Kurento to handle users crowd
 
 ### Setup
  
@@ -27,8 +26,9 @@ Past RTMP calls + Flash Media Server Video Streaming replaced with WebSockets + 
 
 
 ### Possible future steps
- - HTTPS
+ - Add HTTPS
  - Add akka persistence to keep room state after room actor restart;
  - Add user list;
  - Add more meetings features: image sharing, screen sharing, collaborative drawing;
  - Add monitoring page.
+ - Allow easy deployment to a cloud
