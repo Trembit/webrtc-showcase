@@ -1,0 +1,4 @@
+# Application Heroku dependencies
+
+require:
+    - play 2.3.8

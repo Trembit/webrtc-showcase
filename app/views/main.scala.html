@@ -1,0 +1,21 @@
+@(titlePath: String = "")(content: Html)
+
+<!DOCTYPE HTML>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <base target="_blank" />
+        <title>Play Study | @titlePath</title>
+        <script type="text/javascript" src="@routes.Assets.at("js/jquery-1.11.3.min.js")"></script>
+        <script type="text/javascript" src="@routes.Assets.at("js/jquery-migrate-1.2.1.min.js")"></script>
+        <script type="text/javascript" src="@routes.Assets.at("js/bootstrap.min.js")"></script>
+        <link rel="stylesheet" type="text/css" rel="stylesheet" href="@routes.Assets.at("css/cyborg-bootstrap.min.css")" />
+        <link rel="stylesheet" type="text/css" rel="stylesheet" href="@routes.Assets.at("css/cyborg-customization.css")" />
+        <link rel="icon" type="image/png" sizes="16x16" href="@routes.Assets.at("images/favicon.png")" />
+    </head>
+    <body>
+        <div class="wrapper" id="wrapper">
+            @content
+        </div>
+    </body>
+</html>

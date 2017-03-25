@@ -1,0 +1,22 @@
+@(list: List[String])
+
+@main("Admin") {
+
+    <div id="main">
+        <div id="viewport">
+            <p>
+                <button type="button" class="btn btn-primary" onclick="location.reload();">Refresh</button>
+            </p>
+            <label>Room info</label>
+            @list.grouped(3).map { group =>
+                <ul>
+                    @group.map { item =>
+                        <li>@item</li>
+                    }
+                </ul>
+            }
+
+        </div>
+    </div>
+
+}

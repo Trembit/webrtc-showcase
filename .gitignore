@@ -1,0 +1,9 @@
+.idea
+.svn
+.git
+.hidden
+target
+project/target
+logs
+
+nginx/certs/*

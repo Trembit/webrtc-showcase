@@ -1,0 +1,40 @@
+version: '2'
+services:
+
+  kurento:
+    build: kurento
+    image: kurento
+    environment:
+     - KMS_STUN_IP=stun2.l.google.com
+     - KMS_STUN_PORT=19302
+     - KMS_TURN_URL__123=webrtc@live.com:muazkh@numb.viagenie.ca
+    ports:
+      - 8888:8888
+
+  nginx:
+    image: jwilder/nginx-proxy
+    volumes:
+      - ./nginx/certs:/etc/nginx/certs
+#      - ./nginx/my_proxy.conf:/etc/nginx/conf.d/my_proxy.conf
+      - ./nginx/web:/usr/share/nginx/html
+      - ./nginx/vhost.d:/etc/nginx/vhost.d
+      - ./nginx/htpasswd:/etc/nginx/htpasswd
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+    ports:
+      - 80:80
+      - 443:443
+
+  letsencrypt:
+    image: jrcs/letsencrypt-nginx-proxy-companion
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    volumes_from:
+      - nginx
+
+#  nginx1:
+#    image: jrcs/letsencrypt-nginx-proxy-companion
+#    ports:
+#      - "80:80"
+#      - "443:443"
+#     environment:
+#      - VIRTUAL_HOST=meetings-bootstrap.trembit.com

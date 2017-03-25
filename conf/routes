@@ -1,0 +1,21 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# Home page
+#GET     /                           controllers.Application.index
+
+GET         /                    controllers.RoomController.index()
+
+GET         /room/:room          controllers.RoomController.joinRoom(room: String)
+
+POST        /logout              controllers.RoomController.logout()
+
+GET         /admin               controllers.RoomController.admin()
+
+GET         /stream/:room        controllers.RoomController.webSocket(roomType = controllers.RoomType.MEETING_TYPE, room: String)
+
+GET         /stream/:roomType/:room    controllers.RoomController.webSocket(roomType: String, room: String)
+
+# Map static resources from the /public folder to the /assets URL path
+GET         /assets/*file        controllers.Assets.at(path="/public", file)
