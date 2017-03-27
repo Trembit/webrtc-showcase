@@ -30,7 +30,6 @@
     function setError(message) {
         $error.text(message);
         $modalError.modal('show');
-
     }
     if (!window.WebSocket) {
         if (window.MozWebSocket)
@@ -188,7 +187,8 @@
             if (window.location.pathname.length > 1 && pathArray.length >= 2) {
                 room = pathArray[pathArray.length - 1];
             }
-            var url = "ws://" + location.host + "/stream/" + room;
+            var protocol = location.protocol == "https:" ? "wss:" : "ws:";
+            var url = protocol + "//" + location.host + "/stream/" + room;
             console.log("Connecting to " + url + " from " + window.location.pathname);
             socket = new WebSocket(url);
             socket.onmessage = onSocketMessage;
@@ -321,7 +321,10 @@
                 if (participant) {
                     participant.webRtcProblem(m);
                     participant.dispose();
-                    //delete participants[m.broadcastUserId];
+                    if (m.broadcastUserId == pid) {
+                        delete participants[m.broadcastUserId];
+                    }
+                    setError(m.message);
                 }
             } else if (m.messageType == "onIceCandidateFound") {
                 console.log("onIceCandidateFound received");

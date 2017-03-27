@@ -150,14 +150,10 @@ var Participant = function(userId, sendFunction, isLocalUser) {
 
         dispose : function() {
             console.log('Disposing participant ' + this.name);
-            if (isLocalUser && this.stream) {
+            if (!isLocalUser) {
                 video.src = "";
                 video.id = "webcam-me";
-                this.stream.stop();
             } else if (isLocalUser) {
-                video.src = "";
-                video.id = "webcam-me";
-            } else {
                 container.parentNode.removeChild(container);
             }
             try {
