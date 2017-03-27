@@ -91,6 +91,13 @@
         $commandInput.val("");
     }
 
+    function setBroadcastingState(value) {
+        broadcasting = value;
+        $commandPlayButton.text(broadcasting ? "Stop Broadcast" : "Start Broadcast");
+        $commandPlayButton.removeClass(broadcasting ? "btn-success" : "btn-danger").addClass(broadcasting ? "btn-danger" : "btn-success");
+        $me.removeClass(broadcasting ? "hidden" : "").addClass(broadcasting ? "" : "hidden");
+    }
+
     $pname.text(pname);
 
     $modalNameQuery.on('shown.bs.modal', function () {
@@ -132,9 +139,7 @@
         var participant = participants[pid];
         if (broadcasting) {
             broadcasting = false;
-            $commandPlayButton.text(broadcasting ? "Stop Broadcast" : "Start Broadcast");
-            $commandPlayButton.removeClass(broadcasting ? "btn-success" : "btn-danger").addClass(broadcasting ? "btn-danger" : "btn-success");
-            $me.removeClass(broadcasting ? "hidden" : "").addClass(broadcasting ? "" : "hidden");
+            setBroadcastingState(false);
             // remove local broadcast object from state
             sendChangeMessage("broadcast." + pid, null);
 
@@ -159,9 +164,7 @@
     function onBroadcastReady() {
         console.log("onBroadcastReady");
         broadcasting = true;
-        $commandPlayButton.text(broadcasting ? "Stop Broadcast" : " Start Broadcast");
-        $commandPlayButton.removeClass(broadcasting ? "btn-success" : "btn-danger").addClass(broadcasting ? "btn-danger" : "btn-success");
-        $me.removeClass(broadcasting ? "hidden" : "").addClass(broadcasting ? "" : "hidden");
+        setBroadcastingState(true);
     }
 
 
@@ -302,26 +305,26 @@
                     $("#"+ m.fromUserId).find(".username").html(m.realName);
                 }
             } else if (m.messageType == "chatMessage") {
+                // add DOM element
                 $chatArea.html($chatArea.html() + "<p><span>" + m.name + ": </span>" + m.message + "</p>")
+                // scroll to bottom
                 $chatArea.get(0).scrollTop = $chatArea.get(0).scrollHeight;
-                //console.log("Append child " + m.message)
             } else if (m.messageType == "status") {
                 $localTextArea.html(m.local);
                 $allTextArea.html(m.all);
             } else if (m.messageType == "webRtcAnswer") {
-                console.log("sdpAnswerMessage received " + m.broadcastUserId);
                 participants[m.broadcastUserId].webRtcAnswer(m);
                 if (m.broadcastUserId == pid) {
                     // add local broadcast object to state
                     sendChangeMessage("broadcast." + pid, true);
                 }
             } else if (m.messageType == "webRtcProblem") {
-                console.log("sdpAnswerMessage webRtcProblem " + m.broadcastUserId);
                 var participant = participants[m.broadcastUserId];
                 if (participant) {
                     participant.webRtcProblem(m);
-                    participant.dispose();
                     if (m.broadcastUserId == pid) {
+                        setBroadcastingState(false);
+                        participant.dispose();
                         delete participants[m.broadcastUserId];
                     }
                     setError(m.message);
@@ -331,12 +334,6 @@
                 console.log(m);
 
                 participants[m.broadcastUserId].onIceCandidateFound(m);
-            } else if (m.messageType == "sdpAnswerMessage") {
-                var sdpAnswer = m.sdpAnswer;
-                var userId = m.id;
-
-                console.log("sdpAnswerMessage received " + userId);
-                participants[userId].rtcPeer.processSdpAnswer(sdpAnswer);
             } else {
                 console.log("ERROR: Unhandled message type " + m.messageType);
             }
@@ -344,4 +341,9 @@
     }());
 
     connect();
+
+    if (!DetectRTC.isWebRTCSupported) {
+        setError("Sorry. WebRTC is not supported in your browser. Please use Firefox or Chrome.")
+    }
+
 }());

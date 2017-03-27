@@ -149,11 +149,11 @@ var Participant = function(userId, sendFunction, isLocalUser) {
         },
 
         dispose : function() {
-            console.log('Disposing participant ' + this.name);
-            if (!isLocalUser) {
+            console.log('Disposing participant ' + userId);
+            if (isLocalUser) {
                 video.src = "";
                 video.id = "webcam-me";
-            } else if (isLocalUser) {
+            } else {
                 container.parentNode.removeChild(container);
             }
             try {
