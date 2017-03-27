@@ -77,7 +77,7 @@ class MeetingActor(override val roomName: String = "Default") extends BaseActor 
                   case Success(reply) => sender() ! reply
                   case Failure(e) => {
                     log.error("Problem starting kurento broadcast stream", e)
-                    sender() ! WebRtcProblem("Problem publish kurento stream:" + e.getMessage)
+                    sender() ! WebRtcProblem("Problem publish kurento stream:" + e.getMessage, senderUser.id)
                   }
                 }
 
@@ -93,7 +93,7 @@ class MeetingActor(override val roomName: String = "Default") extends BaseActor 
                       case Success(reply) => sender() ! reply
                       case Failure(e) => {
                         log.error(e, "Problem viewing kurento stream")
-                        sender() ! WebRtcProblem("Problem viewing kurento stream:" + e.getMessage)
+                        sender() ! WebRtcProblem("Problem viewing kurento stream:" + e.getMessage, broadcastUserId)
                       }
                     }
                     case None => log.error("No broadcast user found " + broadcastUserId)

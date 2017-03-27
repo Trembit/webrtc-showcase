@@ -17,7 +17,7 @@ case class WebRtcAnswer(sdpAnswer: String, broadcastUserId: String) extends Serv
   var messageType: String = "webRtcAnswer"
 }
 
-case class WebRtcProblem(message: String) extends ServerMessage {
+case class WebRtcProblem(message: String, broadcastUserId: String) extends ServerMessage {
   var messageType: String = "webRtcProblem"
 }
 
