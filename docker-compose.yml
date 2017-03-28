@@ -4,12 +4,13 @@ services:
   kurento:
     build: kurento
     image: kurento
+    ports:
+     - "8888:8888"
     environment:
      - KMS_STUN_IP=stun2.l.google.com
      - KMS_STUN_PORT=19302
      - KMS_TURN_URL__123=webrtc@live.com:muazkh@numb.viagenie.ca
-    ports:
-      - "8888:8888"
+
 
   nginx:
     image: jwilder/nginx-proxy
