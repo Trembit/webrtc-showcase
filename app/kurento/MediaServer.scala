@@ -128,7 +128,7 @@ class MediaServer(meetingActor: MeetingActor) {
     if (isPublisher) {
       publishers.get(user.id) match {
         case Some((pipeline, endpoint)) => endpoint.addIceCandidate(new IceCandidate(msg.candidate, msg.sdpMid, msg.sdpMLineIndex))
-        case None => ???
+        case None => log.warn(s"Skipping ice candidate for non existed publisher:${user.id}")
       }
     } else {
       viewers.get(user.id)

@@ -14,12 +14,14 @@ RUN	echo "deb http://ubuntu.kurento.org/ trusty kms6" | tee /etc/apt/sources.lis
 	&& apt-get update \
 	&& apt-get -y install kurento-media-server-6.0
 
-EXPOSE 8888
+RUN apt-get install telnet
 
 COPY ./entrypoint.sh /entrypoint.sh
 
 RUN chmod +x /entrypoint.sh
 
 ENV GST_DEBUG=Kurento*:5
+
+EXPOSE 8888
 
 ENTRYPOINT ["/entrypoint.sh"]
