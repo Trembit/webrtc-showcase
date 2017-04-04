@@ -18,9 +18,12 @@ It connects users with kurento media server to implement video chat experience.
  
  - Have Oracle Java 8 isntalled
  
- - run `docker-compose run kurento`
- 
- - run `sbt run` 
+ - run 
+ ```
+docker-compose build kurento
+docker run -p 8888:8888 -d kurento
+sbt run
+ ``` 
  
  - navigate to http://localhost:9000
 
