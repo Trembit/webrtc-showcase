@@ -10,15 +10,15 @@ import scala.collection.mutable
 import scala.util.{Failure, Try}
 
 case class OnIceCandidateFound(candidate: String, sdpMid: String, sdpMLineIndex: Int, broadcastUserId: String) extends ServerMessage {
-  var messageType: String = "onIceCandidateFound"
+  val messageType: String = "onIceCandidateFound"
 }
 
 case class WebRtcAnswer(sdpAnswer: String, broadcastUserId: String) extends ServerMessage {
-  var messageType: String = "webRtcAnswer"
+  val messageType: String = "webRtcAnswer"
 }
 
 case class WebRtcProblem(message: String, broadcastUserId: String) extends ServerMessage {
-  var messageType: String = "webRtcProblem"
+  val messageType: String = "webRtcProblem"
 }
 
 
@@ -28,12 +28,12 @@ class MediaServer(meetingActor: MeetingActor) {
 
   lazy val kurento = KurentoClient.create("ws://localhost:8888/kurento")
 
-  var bandwidth_limits: Boolean = false
-  var cpu_optimization: Boolean = false
-  var network_optimization: Boolean = false
-  var videoMaxBitrate: Int = 0
-  var videoMinBitrate: Int = 0
-  private var counter: Int = 0
+  val bandwidth_limits: Boolean = false
+  val cpu_optimization: Boolean = false
+  val network_optimization: Boolean = false
+  val videoMaxBitrate: Int = 0
+  val videoMinBitrate: Int = 0
+  private val counter: Int = 0
 
   val publishers = mutable.HashMap.empty[String, (MediaPipeline, WebRtcEndpoint)]
 

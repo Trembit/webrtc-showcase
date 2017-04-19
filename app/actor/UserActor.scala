@@ -13,7 +13,7 @@ import play.api.libs.json._
  * @param roomRef - room actor
  * @param out - socket actor
  */
-class UserActor(var uid: String, roomRef: ActorRef, out: ActorRef) extends Actor with BaseActor {
+class UserActor(val uid: String, roomRef: ActorRef, out: ActorRef) extends Actor with BaseActor {
 
   override def preStart() = {
     roomRef ! ActorSubscribe(uid)

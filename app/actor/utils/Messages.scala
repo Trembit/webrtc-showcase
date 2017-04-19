@@ -8,9 +8,9 @@ import org.apache.commons.lang3.StringUtils
 import play.api.libs.json._
 
 object Prefix {
-  var USER = "user"
-  var CHAT = "chat"
-  var BROADCAST = "broadcast"
+  val USER = "user"
+  val CHAT = "chat"
+  val BROADCAST = "broadcast"
 }
 
 
@@ -24,7 +24,7 @@ case class AdminStatusReply(name: String, users: Iterable[String], chatSize: Int
 
 abstract class ServerMessage {
 
-  var messageType: String
+  val messageType: String
 
   def toJson = {
     var result = new JsObject(Map())
@@ -56,47 +56,47 @@ abstract class ServerMessage {
   }
 }
 
-class ConnectedMessage(var pid: String, serverTime: Int) extends ServerMessage {
-  var messageType: String = "youAre"
+class ConnectedMessage(val pid: String, serverTime: Int) extends ServerMessage {
+  val messageType: String = "youAre"
 }
 
-class ChangeBracketMessage(val bracket: String, val id : String, var value: JsValue) extends ServerMessage {
-  var key = bracket + "." + id
-  var messageType: String = "change"
+class ChangeBracketMessage(val bracket: String, val id : String, val value: JsValue) extends ServerMessage {
+  val key = bracket + "." + id
+  val messageType: String = "change"
 }
 
-class ChangeMessage(val key: String, var value: JsValue) extends ServerMessage {
-  var messageType: String = "change"
+class ChangeMessage(val key: String, val value: JsValue) extends ServerMessage {
+  val messageType: String = "change"
 }
 
-class UserMessage(var pid : String, var name: String) extends ServerMessage {
-  var messageType: String = "painter"
+class UserMessage(val pid : String, val name: String) extends ServerMessage {
+  val messageType: String = "painter"
 }
 
-class UserDisconnectMessage(var pid : String) extends ServerMessage {
-  var messageType: String = "disconnected"
+class UserDisconnectMessage(val pid : String) extends ServerMessage {
+  val messageType: String = "disconnected"
 }
 
-class ChatMessage(var name : String, var message: String) extends ServerMessage {
-  var messageType: String = "chatMessage"
+class ChatMessage(val name : String, val message: String) extends ServerMessage {
+  val messageType: String = "chatMessage"
 }
 
-class UserCommand(var data: String) extends ServerMessage {
-  var messageType: String = "command"
+class UserCommand(val data: String) extends ServerMessage {
+  val messageType: String = "command"
 }
 
 class ChatClear() extends ServerMessage {
-  var messageType: String = "chatClear"
+  val messageType: String = "chatClear"
 }
 
 
-class UserConnectedMessage(var pid : String,
-                    var name: String) extends ServerMessage {
-  var messageType: String = "connected"
+class UserConnectedMessage(val pid : String,
+                           val name: String) extends ServerMessage {
+  val messageType: String = "connected"
 }
 
 class StatusMessage(val local : String, val all: String) extends ServerMessage {
-  var messageType: String = "status"
+  val messageType: String = "status"
 }
 
 

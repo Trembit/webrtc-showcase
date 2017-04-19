@@ -1,37 +1,40 @@
-Bootstrap Meetings
+WebRTC Showcase
 ==================
 
 This is Play Framework application with Scala | Akka | WebSockets.
-It connects users with kurento media server to implement video chat experience.
+It connects users with Kurento Media Server to implement video chat feature.
 
 ### Features
- - Users presence
- - Chat
- - Multi-user Video Chat with WebRTC 
- - Kurento to handle users crowd
+ 
+ - presenters may publish own web cam and microphone to large auditory (100 users)
+ 
+ - low latency;
+ 
+ - there could be severals rooms at the same time;
+ 
+ - a quick jump into one of the multiple rooms;
+ 
+ - easy to run locally or deploy to a server; 
+
+ - simple chat and list of connected users.
+
 
 ### Setup
  
- - Have docker compose installed 
+ - Oracle Java 8 must be installed
  
- - Have `sbt` tool installed
+ - Install [Docker](https://www.docker.com/community-edition#/download) compose installed
  
- - Have Oracle Java 8 isntalled
+ - Install [SBT](http://www.scala-sbt.org/release/docs/Setup.html) tool installed
  
- - run 
+ - Run 
  ```
-docker-compose build kurento
-docker run -p 8888:8888 -d kurento
-sbt run
- ``` 
+ docker-compose build kurento
+ docker run -p 8888:8888 -d kurento
+ sbt run
+ ```
  
- - navigate to http://localhost:9000
+ - Open http://localhost:9000 page in 2 browsers and start broadcast in one of them
 
-
-### Possible future steps
- - Add HTTPS
- - Add akka persistence to keep room state after room actor restart;
- - Add user list;
- - Add more meetings features: image sharing, screen sharing, collaborative drawing;
- - Add monitoring page.
- - Allow easy deployment to a cloud
+On remote server requires HTTPS to be used. It could be done with nginx proxy and HTTPS certificate generated with Let’s Encrypt.
+https://github.com/JrCs/docker-letsencrypt-nginx-proxy-companion

@@ -41,8 +41,11 @@ class MeetingActor(override val roomName: String = "Default") extends BaseActor 
   }
 
   def changeUserName(user: UserInfo, name: String) = {
-    user.name = name
-    broadcastMessage(new ChangeBracketMessage(Prefix.USER, user.id, user.toJson))
+    val updated = user.copy(name = name)
+    users
+      .find(_._2.id == user.id)
+      .foreach({ case (a, _) => users.put(a, updated)})
+    broadcastMessage(new ChangeBracketMessage(Prefix.USER, updated.id, updated.toJson))
   }
 
   def receive = LoggingReceive {
@@ -100,6 +103,7 @@ class MeetingActor(override val roomName: String = "Default") extends BaseActor 
                   }
 
               case ClearChat(s) =>
+                roomState.keySet.foreach(roomState.remove(_))
                 broadcastAll(new ChatClear().toJson, true)
 
               case other => log.error("ERROR Unexpected message " + other)
@@ -207,9 +211,9 @@ class MeetingActor(override val roomName: String = "Default") extends BaseActor 
   }
 }
 
-class UserInfo(var id: String,
-               var actorRef: ActorRef,
-               var name: String = "New User") {
+case class UserInfo(val id: String,
+               val actorRef: ActorRef,
+               val name: String = "New User") {
 
 //  type UserId = String
 
