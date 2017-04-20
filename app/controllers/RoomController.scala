@@ -49,20 +49,20 @@ object RoomController extends Controller {
 
   lazy val topActor = Akka.system().actorOf(Props[TopActor])
 
-  val DEFAULT_ROOM_NAME = "default"
+  val DEFAULT_ROOM_NAME = "Default"
 
   def index() = UserAction { implicit request =>
     // UID is not used right now
     val uid: String = request.user.uid
 
-    Ok(views.html.room(uid)).withSession(request.session + (UserAction.UID -> uid))
+    Ok(views.html.room(uid, DEFAULT_ROOM_NAME)).withSession(request.session + (UserAction.UID -> uid))
   }
 
   def joinRoom(room: String = DEFAULT_ROOM_NAME) = UserAction { implicit request =>
     val uid: String = request.user.uid
 
     Logger.debug("User visited meeting:" + room)
-    Ok(views.html.room(uid)).withSession(request.session + (UserAction.UID -> uid))
+    Ok(views.html.room(uid, room)).withSession(request.session + (UserAction.UID -> uid))
   }
 
   def logout = Action { implicit request =>

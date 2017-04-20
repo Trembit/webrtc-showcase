@@ -103,7 +103,7 @@ class StatusMessage(val local : String, val all: String) extends ServerMessage {
 class WRInfo
 
 
-abstract sealed class ClientMessage {
+sealed trait ClientMessage {
   override def toString() = {
     val body = getClass().getDeclaredFields().map { field:Field =>
       field.setAccessible(true)
