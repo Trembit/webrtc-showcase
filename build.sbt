@@ -32,7 +32,6 @@ libraryDependencies ++= Seq(
   "com.typesafe.akka" %% "akka-actor" % akkaVersion,
   "com.typesafe.akka" %% "akka-testkit" % akkaVersion,
   "com.typesafe.akka" %% "akka-slf4j"    % akkaVersion
-
 )
 
 libraryDependencies += "org.scalatest" %% "scalatest" % "2.1.4" % "test"
@@ -40,3 +39,5 @@ libraryDependencies += "org.scalatest" %% "scalatest" % "2.1.4" % "test"
 libraryDependencies += "commons-io" % "commons-io" % "2.4" % "test"
 
 libraryDependencies += specs2 % Test
+
+scalacOptions in Test ++= Seq("-Yrangepos")

@@ -22,7 +22,7 @@ case class AdminStatus()
 case class AdminStatusReply(name: String, users: Iterable[String], chatSize: Int)
 
 
-abstract class ServerMessage {
+trait ServerMessage {
 
   val messageType: String
 
@@ -56,36 +56,36 @@ abstract class ServerMessage {
   }
 }
 
-class ConnectedMessage(val pid: String, serverTime: Int) extends ServerMessage {
+case class ConnectedMessage(val pid: String, serverTime: Int) extends ServerMessage {
   val messageType: String = "youAre"
 }
 
-class ChangeBracketMessage(val bracket: String, val id : String, val value: JsValue) extends ServerMessage {
+case class ChangeBracketMessage(val bracket: String, val id : String, val value: JsValue) extends ServerMessage {
   val key = bracket + "." + id
   val messageType: String = "change"
 }
 
-class ChangeMessage(val key: String, val value: JsValue) extends ServerMessage {
+case class ChangeMessage(val key: String, val value: JsValue) extends ServerMessage {
   val messageType: String = "change"
 }
 
-class UserMessage(val pid : String, val name: String) extends ServerMessage {
+case class UserMessage(val pid : String, val name: String) extends ServerMessage {
   val messageType: String = "painter"
 }
 
-class UserDisconnectMessage(val pid : String) extends ServerMessage {
+case class UserDisconnectMessage(val pid : String) extends ServerMessage {
   val messageType: String = "disconnected"
 }
 
-class ChatMessage(val name : String, val message: String) extends ServerMessage {
+case class ChatMessage(val name : String, val message: String) extends ServerMessage {
   val messageType: String = "chatMessage"
 }
 
-class UserCommand(val data: String) extends ServerMessage {
+case class UserCommand(val data: String) extends ServerMessage {
   val messageType: String = "command"
 }
 
-class ChatClear() extends ServerMessage {
+case class ChatClear() extends ServerMessage {
   val messageType: String = "chatClear"
 }
 
