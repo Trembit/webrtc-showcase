@@ -33,7 +33,6 @@ class MediaServer(meetingActor: MeetingActor) {
   val network_optimization: Boolean = false
   val videoMaxBitrate: Int = 0
   val videoMinBitrate: Int = 0
-  private val counter: Int = 0
 
   val publishers = mutable.HashMap.empty[String, (MediaPipeline, WebRtcEndpoint)]
 

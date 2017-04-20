@@ -39,12 +39,9 @@ class MeetingSpec() extends TestKit(ActorSystem("MeetingSpec")) with ImplicitSen
 
       topActor ! GetRoomActor("room1")
       val room1 = expectMsgPF()({ case a:ActorRef => a})
-//      val out = system.actorOf(TestActors.blackholeProps)
-      val uid = "1234"
-//      val userActor = system.actorOf(Props(new UserActor(uid, room1, out)))
       val userActor = self
 
-      room1.tell(ActorSubscribe(uid), userActor)
+      room1.tell(ActorSubscribe("1234"), userActor)
       room1.tell((JoinMe("First User Ever"), JsNull), userActor)
 
       expectMsgPF(hint = "ConnectedMessage")({ case a@ConnectedMessage(p, d) => a })

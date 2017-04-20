@@ -14,17 +14,16 @@ object Prefix {
 }
 
 
-case class ActorMessage(uuid: String, s: String)
 case class ActorSubscribe(uid: String, name: String = "")
 case class ActorLeave(actorRef: ActorRef)
 
-case class AdminStatus()
+case object AdminStatus
 case class AdminStatusReply(name: String, users: Iterable[String], chatSize: Int)
 
 
 trait ServerMessage {
 
-  val messageType: String
+  def messageType: String
 
   def toJson = {
     var result = new JsObject(Map())
@@ -100,9 +99,6 @@ class StatusMessage(val local : String, val all: String) extends ServerMessage {
 }
 
 
-class WRInfo
-
-
 sealed trait ClientMessage {
   override def toString() = {
     val body = getClass().getDeclaredFields().map { field:Field =>
@@ -126,8 +122,6 @@ case class ViewBroadcast(sdp: String, broadcastUserId: String) extends ClientMes
 case class IceCandidateBroadcast(candidate: String, sdpMid: String, sdpMLineIndex: Int, broadcastUserId: String) extends ClientMessage
 case class StopBroadcast(fromUserId: String) extends ClientMessage
 case class ClearChat(fromUserId: String) extends  ClientMessage
-
-case class PingPongPlayerMove(left : Boolean) extends  ClientMessage
 
 object Converter {
 

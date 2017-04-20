@@ -1,25 +1,23 @@
 package controllers
 
-import java.io.File
 import java.util.UUID
 import java.util.concurrent.atomic.AtomicInteger
 
 import actor.utils.{AdminStatus, AdminStatusReply}
-import actor.{GetRoomActor, TopActor, MeetingActor, UserActor}
+import actor.{GetRoomActor, TopActor, UserActor}
 import akka.actor.{ActorRef, Props}
 import play.api.Logger
 import play.api.libs.json.JsValue
 import play.api.mvc._
 import play.libs.Akka
 
-import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
-import scala.util.{Success, Failure}
 import scala.concurrent.duration._
 import scala.language.postfixOps
 
 import play.api.Play.current
-import akka.pattern.{ ask, pipe }
+import akka.pattern.{ ask }
+import scala.concurrent.ExecutionContext.Implicits.global
 
 
 class UserRequest[A](val user: AuthUser, request: Request[A]) extends WrappedRequest[A](request)
@@ -49,7 +47,7 @@ object RoomController extends Controller {
 
   lazy val topActor = Akka.system().actorOf(Props[TopActor])
 
-  val DEFAULT_ROOM_NAME = "Default"
+  val DEFAULT_ROOM_NAME = "default"
 
   def index() = UserAction { implicit request =>
     // UID is not used right now
@@ -69,39 +67,34 @@ object RoomController extends Controller {
     Redirect("/").withNewSession
   }
 
-  def admin = Action {
-    Ok(views.html.admin(List.empty[String]))
-  }
+  def admin = Action.async {
+    import akka.util.Timeout
 
-//  def admin = Action.async {
-//    import akka.util.Timeout
-//
-//    import scala.concurrent.duration._
-//    implicit val timeout = Timeout(5 seconds)
-//
-//    val actor: Future[ActorRef] = getRoomActor(RoomType.MEETING_TYPE, DEFAULT_ROOM_NAME)
-//    (actor ? AdminStatus).map {
-//      case response: AdminStatusReply =>
-//        Ok(views.html.admin(
-//          List[String](
-//            "Room: " + response.name,
-//            "Users count: " + response.users.size,
-//            "Users: " + response.users.mkString(","),
-//            "Messages count: " + response.chatSize
-//          )
-//        )
-//      )
-//    }
-//  }
+    import scala.concurrent.duration._
+    import akka.pattern.ask
+    implicit val timeout = Timeout(5 seconds)
+
+    for {
+      actor <- getRoomActor(DEFAULT_ROOM_NAME)
+      reply <- (actor ? AdminStatus).mapTo[AdminStatusReply]
+    } yield Ok(views.html.admin(
+      List[String](
+        "Room: " + reply.name,
+        "Users count: " + reply.users.size,
+        "Users: " + reply.users.mkString(","),
+        "Messages count: " + reply.chatSize
+      )
+    ))
+  }
 
   def webSocket(roomType: String, room: String = DEFAULT_ROOM_NAME) = WebSocket.tryAcceptWithActor[JsValue, JsValue] { implicit request =>
     val uid = UUID.randomUUID().toString().substring(0, 4)
 
-    getRoomActor(roomType, room.toLowerCase).map(actor => Right(UserActor.props(uid, actor)))
+    getRoomActor(room.toLowerCase).map(actor => Right(UserActor.props(uid, actor)))
   }
 
   /* HELPERS */
-  def getRoomActor(roomType: String, room: String): Future[ActorRef] = synchronized {
+  def getRoomActor(room: String): Future[ActorRef] = synchronized {
     topActor.ask(GetRoomActor(room))(5 second)
       .map {
         case actor: ActorRef => actor
