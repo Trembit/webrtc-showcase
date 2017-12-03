@@ -25,7 +25,7 @@ class UserActor(val uid: String, roomRef: ActorRef, out: ActorRef) extends Actor
       out ! msg.toJson
 
     // json from room, send to client
-    case js: JsValue if sender != out =>
+    case js: JsValue if sender.path == roomRef.path =>
       out ! js
 
     case js: JsValue =>

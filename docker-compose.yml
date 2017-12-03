@@ -1,22 +1,29 @@
-version: '2'
+version: '3.3'
 services:
 
   kurento:
-    build: kurento
-    image: kurento
+    image: kurento/kurento-media-server:6.6.3
+#    network_mode: "host"
     ports:
      - "8888:8888"
     environment:
-     - KMS_STUN_IP=stun2.l.google.com
+     - KMS_STUN_IP=stun4.l.google.com
      - KMS_STUN_PORT=19302
-     - KMS_TURN_URL__123=webrtc@live.com:muazkh@numb.viagenie.ca
+     - KMS_TURN_URL=webrtc@live.com:muazkh@numb.viagenie.ca
 
+#  coturn:
+##    build: coturn
+#    image: kurento/coturn
+#    ports:
+#      - "3478:3478/udp"
+#    environment:
+#     - NAT=true
 
   nginx:
     image: jwilder/nginx-proxy
     volumes:
       - ./nginx/certs:/etc/nginx/certs
-#      - ./nginx/my_proxy.conf:/etc/nginx/conf.d/my_proxy.conf
+      - ./nginx/my_proxy.conf:/etc/nginx/conf.d/my_proxy.conf
       - ./nginx/web:/usr/share/nginx/html
       - ./nginx/vhost.d:/etc/nginx/vhost.d
       - ./nginx/htpasswd:/etc/nginx/htpasswd
@@ -24,13 +31,13 @@ services:
     ports:
       - 80:80
       - 443:443
-
-  letsencrypt:
-    image: jrcs/letsencrypt-nginx-proxy-companion
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock:ro
-    volumes_from:
-      - nginx
+#
+#  letsencrypt:
+#    image: jrcs/letsencrypt-nginx-proxy-companion
+#    volumes:
+#      - /var/run/docker.sock:/var/run/docker.sock:ro
+#    volumes_from:
+#      - nginx
 
 #  nginx1:
 #    image: jrcs/letsencrypt-nginx-proxy-companion

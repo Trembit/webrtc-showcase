@@ -6,7 +6,8 @@ import java.lang.reflect.Field
 import actor.utils._
 import akka.actor._
 import akka.event.{Logging, LoggingReceive}
-import kurento.{WebRtcProblem, MediaServer}
+import kurento.{MediaServer, WebRtcProblem}
+import org.kurento.client.internal.server.KurentoServerException
 import play.api.libs.json._
 
 import scala.collection.mutable
@@ -96,6 +97,13 @@ class MeetingActor(override val roomName: String = "Default") extends BaseActor 
                       case Success(reply) => sender() ! reply
                       case Failure(e) => {
                         log.error(e, "Problem viewing kurento stream")
+
+                        e match {
+                          case kse: KurentoServerException if kse.getCode == 40101 =>
+//                            log.info("Broadcast is not registered on kurento, let's remove it")
+//                            self ! StopBroadcast(broadcastUserId)
+                        }
+
                         sender() ! WebRtcProblem("Problem viewing kurento stream: " + e.getMessage, broadcastUserId)
                       }
                     }

@@ -210,6 +210,7 @@
             };
             socket.onerror = function (evt) {
                 console.error("error", evt);
+                setError("Can't establish socket connection.");
             };
         } catch (e) {
             setError("WebSocket connection failed.");

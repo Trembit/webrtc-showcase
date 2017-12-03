@@ -1,27 +1,11 @@
-# stream oriented kurento
-#
-# VERSION               4.4.3
+FROM kurento/kurento-media-server:6.6.3
 
-FROM      ubuntu:14.04
-MAINTAINER Patxi Gortázar <patxi.gortazar@gmail.com>
+#COPY ./entrypoint.sh /entrypoint.sh
 
-RUN apt-get update \
-  && apt-get -y dist-upgrade \
-	&& apt-get install -y wget
+#RUN chmod +x /entrypoint.sh
 
-RUN	echo "deb http://ubuntu.kurento.org/ trusty kms6" | tee /etc/apt/sources.list.d/kurento.list \
-	&& wget -O - http://ubuntu.kurento.org/kurento.gpg.key | apt-key add - \
-	&& apt-get update \
-	&& apt-get -y install kurento-media-server-6.0
+#ENV GST_DEBUG=Kurento*:5
 
-RUN apt-get install telnet
+#EXPOSE 8888
 
-COPY ./entrypoint.sh /entrypoint.sh
-
-RUN chmod +x /entrypoint.sh
-
-ENV GST_DEBUG=Kurento*:5
-
-EXPOSE 8888
-
-ENTRYPOINT ["/entrypoint.sh"]
+#ENTRYPOINT ["/entrypoint.sh"]

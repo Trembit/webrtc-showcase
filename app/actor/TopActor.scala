@@ -17,7 +17,7 @@ class TopActor extends BaseActor with ActorLogging {
   override def receive: Receive = {
     case GetRoomActor(room) =>
       val roomActor = roomActorRefs.get(room).getOrElse(createRoomActor(room))
-      sender() ! roomActor
+      sender ! roomActor
 
     case Terminated(child) => log.info("Terminated actor " + child.path.name)
 
@@ -26,7 +26,7 @@ class TopActor extends BaseActor with ActorLogging {
 
   def createRoomActor(room: String): ActorRef = {
     val props = Props(new MeetingActor(room))
-    val roomActor = context.actorOf(props, name = room)
+    val roomActor = context.actorOf(props, name = "room-" + room)
     roomActorRefs.put(room, roomActor)
     context.watch(roomActor)
     roomActor
