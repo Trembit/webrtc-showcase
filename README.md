@@ -2,7 +2,7 @@ WebRTC Showcase
 ==================
 
 This is Play Framework application with Scala | Akka | WebSockets.
-It connects users with Kurento Media Server to implement video chat feature.
+It connects users with Kurento Media Server to implement video chat functionality.
 
 ### Features
  
@@ -27,14 +27,13 @@ It connects users with Kurento Media Server to implement video chat feature.
  
  - Install [SBT](http://www.scala-sbt.org/release/docs/Setup.html) tool installed
  
- - Run 
- ```
- docker-compose build kurento
- docker run -p 8888:8888 -d kurento
- sbt run
- ```
+ - Bind local.trembit.com domain in _hosts_ file
  
- - Open http://localhost:9000 page in 2 browsers and start broadcast in one of them
+ - Run `sbt run`
+ 
+ - Run `docker-compose up` (runs Kurento infrastructure) 
+ 
+ - Open https://local.trembit.com page in 2 browsers and start broadcast in one of them
 
 On remote server requires HTTPS to be used. It could be done with nginx proxy and HTTPS certificate generated with Let’s Encrypt.
 https://github.com/JrCs/docker-letsencrypt-nginx-proxy-companion

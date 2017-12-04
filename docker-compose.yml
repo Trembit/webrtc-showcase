@@ -1,11 +1,27 @@
 version: '3.3'
 services:
 
+
+  nginx:
+    depends_on:
+     - kurento
+    image: jwilder/nginx-proxy
+    volumes:
+      - ./nginx/certs:/etc/nginx/certs
+      - ./nginx/proxy.conf.nginx:/etc/nginx/conf.d/my_proxy.conf
+      - ./nginx/web:/usr/share/nginx/html
+      - ./nginx/vhost.d:/etc/nginx/vhost.d
+      - ./nginx/htpasswd:/etc/nginx/htpasswd
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+    ports:
+      - 80:80
+      - 443:443
+      - 8889:8889
+
   kurento:
     image: kurento/kurento-media-server:6.6.3
-#    network_mode: "host"
     ports:
-     - "8888:8888"
+     - 8888:8888
     environment:
      - KMS_STUN_IP=stun4.l.google.com
      - KMS_STUN_PORT=19302
@@ -18,19 +34,6 @@ services:
 #      - "3478:3478/udp"
 #    environment:
 #     - NAT=true
-
-  nginx:
-    image: jwilder/nginx-proxy
-    volumes:
-      - ./nginx/certs:/etc/nginx/certs
-      - ./nginx/my_proxy.conf:/etc/nginx/conf.d/my_proxy.conf
-      - ./nginx/web:/usr/share/nginx/html
-      - ./nginx/vhost.d:/etc/nginx/vhost.d
-      - ./nginx/htpasswd:/etc/nginx/htpasswd
-      - /var/run/docker.sock:/tmp/docker.sock:ro
-    ports:
-      - 80:80
-      - 443:443
 #
 #  letsencrypt:
 #    image: jrcs/letsencrypt-nginx-proxy-companion

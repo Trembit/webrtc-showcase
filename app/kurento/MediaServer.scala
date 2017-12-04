@@ -26,7 +26,7 @@ class MediaServer(meetingActor: MeetingActor) {
 
   private val log = Logger(this.getClass())
 
-  lazy val kurento = KurentoClient.create("ws://localhost:8888/kurento")
+  lazy val kurento = KurentoClient.create("wss://local.trembit.com:8889/kurento")
 
   val bandwidth_limits: Boolean = false
   val cpu_optimization: Boolean = false

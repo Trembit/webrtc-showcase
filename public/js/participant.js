@@ -91,9 +91,18 @@ var Participant = function(userId, sendFunction, isLocalUser) {
             return new Promise(function (resolve, reject) {
                 console.log("Participant:start " + userId + " isLocal:" + isLocalUser);
                 if (isLocalUser) {
+                    var constraints = {
+                        audio: true,
+                        video: {
+                            width: 320,
+                            framerate: 15
+                        }
+                    };
+
                     var options = {
                         localVideo: video,
-                        onicecandidate: onLocalIceCandidate
+                        onicecandidate: onLocalIceCandidate,
+                        mediaConstraints: constraints
                     };
 
                     webRtcPeer = kurentoUtils.WebRtcPeer.WebRtcPeerSendonly(options, function (error) {
