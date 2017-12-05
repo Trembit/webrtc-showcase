@@ -1,0 +1,91 @@
+@(uid: String, roomName: String)
+
+@main(roomName) {
+<div class="modal" id="modal-error">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-danger">
+                <button type="button" class="close" id="modal-error-close1" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h6 class="modal-title">Error</h6>
+            </div>
+            <div class="modal-body">
+                <p id="error">Javascript is not enabled.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" id="modal-error-close2" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal" id="modal-name-query">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" id="modal-name-close1" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h6 class="modal-title">What is your name?</h6>
+            </div>
+            <div class="modal-body">
+                <div class="input-group">
+                    <span class="input-group-addon" id="basic-addon1">&#64;</span>
+                    <input type="text" class="form-control" id="modal-name-input" placeholder="Username" aria-describedby="basic-addon1">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" id="modal-name-close2" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="modal-name-save">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="panel panel-default">
+    <div class="panel-body">
+        <section class="video" id="participants">
+            <noscript>
+                <div class="alert alert-danger text-center" role="alert">
+                    <span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span>
+                    Javascript is not enabled.
+                </div>
+            </noscript>
+            <div class="participant hidden" id="me">
+                <video class="webcam-me" id="webcam-me" autoplay="true" muted="muted"></video>
+            </div>
+        </section>
+        <section class="chat">
+            <div class="chat-display" id="chatArea">
+            </div>
+        </section>
+    </div>
+    <div class="panel-heading">
+        <a class="btn btn-success btn-broadcast" id="commandScreenButton">
+            Share screen
+        </a>
+        <a class="btn btn-success btn-broadcast" id="commandPlayButton">
+            Start Broadcast
+        </a>
+        <p class="playername">
+            Your name: <span id="pname" class="name" data-toggle="modal" data-target="#modal-name-query"></span> in room: <span id="room" class="room"></span>.
+        </p>
+        <p class="users">
+            Users (<span class="users-number" id="users-number">0</span>): <span class="users-list" id="users-list"></span>
+        </p>
+    </div>
+    <div class="panel-footer">
+        <a class="btn btn-default btn-clear" id="commandClearButton">
+            <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span> Clear
+        </a>
+        <div class="input-group">
+            <span class="input-group-addon">You:</span>
+            <input type="text" class="form-control" placeholder="Your message..." id="commandInput"/>
+                    <span class="input-group-btn">
+                      <a class="btn btn-primary" type="button" id="commandSendButton">Send</a>
+                    </span>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="@routes.Assets.at("js/adapter.js")"></script>
+<script type="text/javascript" src="@routes.Assets.at("js/DetectRTC.js")"></script>
+<script type="text/javascript" src="@routes.Assets.at("js/participant.js")"></script>
+<script type="text/javascript" src="@routes.Assets.at("js/room.js")"></script>
+<script type="text/javascript" src="@routes.Assets.at("js/kurento-utils.js")"></script>
+
+}
