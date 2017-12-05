@@ -4,7 +4,7 @@ version := "1.6"
 
 lazy val root = (project in file(".")).enablePlugins(PlayScala)
 
-scalaVersion := "2.11.7"
+scalaVersion := "2.12.4"
 
 scalacOptions ++= Seq("-unchecked", "-feature")
 
@@ -35,14 +35,12 @@ libraryDependencies ++= Seq(
   "com.typesafe.akka" %% "akka-slf4j"    % akkaVersion
 )
 
-libraryDependencies += "org.scalatest" %% "scalatest" % "2.1.4" % "test"
+libraryDependencies += "org.scalatest" %% "scalatest" % "3.0.4" % "test"
 
 libraryDependencies += "commons-io" % "commons-io" % "2.4" % "test"
 
 libraryDependencies += specs2 % Test
 
 scalacOptions in Test ++= Seq("-Yrangepos")
-
-javaOptions in run += "-Djavax.net.debug=ssl:handshake"
 
 fork in run := true
