@@ -1,0 +1,16 @@
+<div class="modal-dialog" (click)="close.emit()">
+  <div class="modal-content">
+    <div class="modal-header bg-danger">
+      <button type="button" class="close" (click)="close.emit()">
+        <span>&times;</span>
+      </button>
+      <h6 class="modal-title">{{header}}</h6>
+    </div>
+    <div class="modal-body">
+      <p>{{message}}</p>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-default" (click)="close.emit()">Close</button>
+    </div>
+  </div>
+</div>

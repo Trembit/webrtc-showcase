@@ -1,0 +1,51 @@
+<div class="wrapper">
+  <div class="panel panel-default">
+    <div class="panel-body">
+      <section class="video">
+        <noscript>
+          <div class="alert alert-danger text-center" role="alert">
+            <span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span>
+            Javascript is not enabled.
+          </div>
+        </noscript>
+        <div class="participant hidden" [ngClass]="{'hidden': !broadcasting}">
+          <video class="webcam-me" autoplay="true" muted="muted"></video>
+        </div>
+      </section>
+      <section class="chat">
+        <div class="chat-display" #chat>
+          <p *ngFor="let message of chatMessages">
+            <span>{{message.name}}</span>
+            {{message.value}}
+          </p>
+        </div>
+      </section>
+    </div>
+    <div class="panel-heading">
+      <a class="btn btn-success btn-broadcast" (click)="setBroadcast(!broadcasting)"
+         [ngClass]="{'btn-danger': broadcasting, 'btn-success': !broadcasting}">
+        {{this.broadcasting ? "Stop Broadcast" : "Start Broadcast"}}
+      </a>
+      <p class="playername">
+        Your name: <span class="name">{{pname}}</span> in room: <span class="room">{{room}}</span>.
+      </p>
+      <p class="users">
+        Users (<span class="users-number">{{usersNumber}}</span>): <span class="users-list">{{usersList}}</span>
+      </p>
+    </div>
+    <div class="panel-footer">
+      <a class="btn btn-default btn-clear" (click)="commandClearButton()">
+        <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span> Clear
+      </a>
+      <div class="input-group">
+        <span class="input-group-addon">You:</span>
+        <input type="text" class="form-control" placeholder="Your message..." #input>
+        <span class="input-group-btn">
+        <a class="btn btn-primary" type="button" (click)="sendChatMessage($event, input.value); input.value='';">Send</a>
+      </span>
+      </div>
+    </div>
+  </div>
+</div>
+<modal-error *ngIf="showError" [message]="errorMessage" (close)="removeError()"></modal-error>
+<modal-enter *ngIf="showModalName" (close)="closeModalName()" (submit)="modalNameSave($event)"></modal-enter>

@@ -7,3 +7,4 @@ project/target
 logs
 
 nginx/certs/*
+web/node_modules

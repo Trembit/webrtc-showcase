@@ -1,0 +1,228 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+html, body {
+    height: 100%;
+    width: 100%;
+}
+body {
+    padding: 10px;
+    background-color: #060606;
+    overflow: hidden;
+    padding-right: 10px !important;
+}
+p {
+    margin: 0;
+}
+.wrapper {
+    display: block;
+    width: 768px;
+    height: 100%;
+    margin: 0 auto;
+}
+.panel {
+    position: relative;
+    height: 100%;
+}
+.panel-heading {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 60px;
+    overflow: hidden;
+}
+.panel-body {
+    height: 100%;
+    padding: 60px 15px 60px 15px;
+}
+.panel-footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 60px;
+}
+section.video {
+    display: block;
+    width: 100%;
+    height: 50%;
+    overflow: auto;
+}
+.playername {
+    display: block;
+    margin-right: 10px;
+}
+.playername .name {
+    font-size: 1.1em;
+    cursor: pointer;
+    color: #fff;
+}
+.playername .room {
+    font-size: 1.1em;
+    color: #fff;
+}
+.users {
+    display: block;
+    width: 600px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+.users .users-number {
+    font-size: 1.1em;
+    color: #fff;
+}
+.users .users-list {
+    font-size: 1.1em;
+    color: #fff;
+}
+.btn-broadcast {
+    float: right;
+    margin-left: 10px;
+}
+.participant {
+    position: relative;
+    display: inline-block;
+    width: 224px;
+    height: 170px;
+    margin: 10px;
+    background-color: #151515;
+    border: 1px solid #282828;
+}
+.participant>video {
+    display: block;
+    margin: 0 auto;
+    max-width: 100%;
+    max-height: 100%;
+}
+.video-control {
+    position: absolute;
+    bottom: 3px;
+    left: 3px;
+    display: block;
+    width: 100%;
+    z-index: 100;
+}
+input[type=range].slider-volume {
+    position: absolute;
+    display: inline-block;
+    width: 100px;
+    margin-left: 3px;
+    -webkit-appearance: none;
+    background-color: transparent;
+}
+.username {
+    float: right;
+    margin-right: 5px;
+    padding: 0 3px 0 3px;
+    color : #FFF;
+    background-color : #151515;
+}
+section.chat {
+    display: block;
+    padding-bottom: 5px;
+    width: 100%;
+    height: 50%;
+}
+.chat-display {
+    height: 100%;
+    padding: 5px;
+    background-color: #151515;
+    border: 1px solid #282828;
+    border-radius: 3px;
+    overflow-y: auto;
+}
+.chat-display>p {
+    color: #fff;
+}
+.chat-display>p>span {
+    color: #888888;
+    font-weight: bold;
+}
+
+.btn-clear {
+    float: right;
+    margin-left: 50px;
+}
+/* Modal screens */
+.alert {
+    margin-top: 10px;
+}
+.modal-dialog {
+    z-index: 1060;
+}
+.modal-header {
+    padding: 10px;
+}
+.modal-body {
+    padding: 10px;
+}
+.modal-footer {
+    padding: 10px;
+}
+#modal-error .modal-content {
+    overflow: hidden;
+}
+#modal-error .modal-header {
+    color: #fff;
+}
+#modal-error button.close {
+    opacity: 1;
+}
+/* Custom scrolls */
+.chat-display::-webkit-scrollbar {
+    -webkit-appearance: none;
+    width: 16px;
+}
+.chat-display::-webkit-scrollbar-track {
+    background-color: rgba(136, 136, 136, .6);
+    border-radius: 8px;
+}
+.chat-display::-webkit-scrollbar-thumb {
+    border-radius: 8px;
+    background-color: rgba(60,60,60, .6);
+}
+.video::-webkit-scrollbar {
+    -webkit-appearance: none;
+    width: 16px;
+}
+.video::-webkit-scrollbar-track {
+    background-color: rgba(136, 136, 136, .6);
+    border-radius: 8px;
+}
+.video::-webkit-scrollbar-thumb {
+    border-radius: 8px;
+    background-color: rgba(60,60,60, .6);
+}
+/* Styling volume slider */
+input[type=range]{
+    -webkit-appearance: none;
+    position: relative;
+    top: 10px;
+}
+input[type=range]::-webkit-slider-runnable-track {
+    width: 300px;
+    height: 1px;
+    background: #424242;
+    border: none;
+    border-radius: 3px;
+}
+input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    height: 20px;
+    width: 8px;
+    background: #424242;
+    border: 1px solid #888888;
+    margin-top: -10px;
+}
+input[type=range]:focus {
+    outline: none;
+}
+input[type=range]:focus::-webkit-slider-runnable-track {
+    background: #424242;
+}
+/* Support rules */
+.hidden {
+    display: none;
+}
