@@ -1,4 +1,4 @@
-<div class="modal-dialog" (click)="close.emit()">
+<div class="modal-dialog" (click)="$event.stopPropagation()">
   <div class="modal-content">
     <div class="modal-header bg-danger">
       <button type="button" class="close" (click)="close.emit()">

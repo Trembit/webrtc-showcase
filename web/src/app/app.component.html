@@ -9,7 +9,7 @@
           </div>
         </noscript>
         <div class="participant hidden" [ngClass]="{'hidden': !broadcasting}">
-          <video class="webcam-me" autoplay="true" muted="muted"></video>
+          <video class="webcam-me" autoplay="true" muted="muted" id="webcam-me"></video>
         </div>
       </section>
       <section class="chat">
@@ -22,12 +22,12 @@
       </section>
     </div>
     <div class="panel-heading">
-      <a class="btn btn-success btn-broadcast" (click)="setBroadcast(!broadcasting)"
+      <button class="btn btn-success btn-broadcast" (click)="commandPlayButton()"
          [ngClass]="{'btn-danger': broadcasting, 'btn-success': !broadcasting}">
         {{this.broadcasting ? "Stop Broadcast" : "Start Broadcast"}}
-      </a>
+      </button>
       <p class="playername">
-        Your name: <span class="name">{{pname}}</span> in room: <span class="room">{{room}}</span>.
+        Your name: <span class="name" (click)="openModalName()">{{pname}}</span> in room: <span class="room">{{room}}</span>.
       </p>
       <p class="users">
         Users (<span class="users-number">{{usersNumber}}</span>): <span class="users-list">{{usersList}}</span>
@@ -39,7 +39,7 @@
       </a>
       <div class="input-group">
         <span class="input-group-addon">You:</span>
-        <input type="text" class="form-control" placeholder="Your message..." #input>
+        <input type="text" class="form-control" placeholder="Your message..." #input (keypress)="onInputKeyPress($event, input)">
         <span class="input-group-btn">
         <a class="btn btn-primary" type="button" (click)="sendChatMessage($event, input.value); input.value='';">Send</a>
       </span>
@@ -47,5 +47,5 @@
     </div>
   </div>
 </div>
-<modal-error *ngIf="showError" [message]="errorMessage" (close)="removeError()"></modal-error>
-<modal-enter *ngIf="showModalName" (close)="closeModalName()" (submit)="modalNameSave($event)"></modal-enter>
+<modal-error *ngIf="showError" [message]="errorMessage" (close)="removeError()" (click)="removeError()"></modal-error>
+<modal-enter *ngIf="showModalName" (close)="closeModalName()" (submit)="modalNameSave($event)" (click)="closeModalName()"></modal-enter>

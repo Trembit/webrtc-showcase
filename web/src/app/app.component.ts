@@ -113,6 +113,42 @@ export class AppComponent implements OnInit {
     this.send({messageType: "clearChat", fromUserId: this.pid});
   }
 
+  public onInputKeyPress(event: KeyboardEvent, input): void {
+    if (event.charCode === 13) {
+      this.sendChatMessage(null, input.value);
+      input.value='';
+    }
+  }
+
+  public commandPlayButton(): void {
+    var participant = this.participants[this.pid];
+    if (this.broadcasting) {
+      this.setBroadcastingState(false);
+      // remove local broadcast object from state
+      this.sendChangeMessage("broadcast." + this.pid, null);
+
+      if (participant) {
+        delete this.participants[this.pid];
+        delete this.usersInRoom[this.pid];
+        participant.dispose();
+        console.log("Removing local broadcast")
+      }
+    } else {
+      console.log(this.pid + " registered in room " + this.room);
+      if (participant) {
+        participant.dispose();
+      }
+      participant = new Participant(this.pid, this.send.bind(this), true);
+      this.participants[this.pid] = participant;
+      participant.start().then(this.onBroadcastReady.bind(this));
+      //$('#commandPlayButton').text("Starting...");
+    }
+  }
+
+  private setBroadcastingState(value) {
+    this.broadcasting = value;
+  }
+
   private scrollChatToBottom(): void {
     this.chat.nativeElement.scrollTop = this.chat.nativeElement.scrollHeight;
   }
@@ -159,43 +195,14 @@ export class AppComponent implements OnInit {
 
   private receiveVideo(remoteUserId) {
     console.log("receiveVideo remoteUserId:" + remoteUserId);
-    var participant = new Participant(remoteUserId, this.send, false);
+    var participant = new Participant(remoteUserId, this.send.bind(this), false);
     this.participants[remoteUserId] = participant;
     participant.start();
-  }
-
-  private setBroadcastingState(value) {
-    this.broadcasting = value;
   }
 
   private onBroadcastReady(): void {
     console.log("onBroadcastReady");
     this.setBroadcastingState(true);
-  }
-
-  private commandPlayButton(): void {
-    var participant = this.participants[this.pid];
-    if (this.broadcasting) {
-      this.setBroadcastingState(false);
-      // remove local broadcast object from state
-      this.sendChangeMessage("broadcast." + this.pid, null);
-
-      if (participant) {
-        delete this.participants[this.pid];
-        delete this.usersInRoom[this.pid];
-        participant.dispose();
-        console.log("Removing local broadcast")
-      }
-    } else {
-      console.log(this.pid + " registered in room " + this.room);
-      if (participant) {
-        participant.dispose();
-      }
-      participant = new Participant(this.pid, this.send, true);
-      this.participants[this.pid] = participant;
-      participant.start().then(this.onBroadcastReady);
-      //$('#commandPlayButton').text("Starting...");
-    }
   }
 
   private tryConnectAgain(): void {
