@@ -22,10 +22,22 @@
       </section>
     </div>
     <div class="panel-heading">
-      <button class="btn btn-success btn-broadcast" (click)="commandPlayButton()"
-         [ngClass]="{'btn-danger': broadcasting, 'btn-success': !broadcasting}">
+      <button class="btn btn-success btn-broadcast" (click)="commandPlayButton(true)"
+          *ngIf="!broadcasting"
+         [ngClass]="{'btn-danger': broadcasting, 'btn-success': !broadcasting, 'disabled': broadcastLoading}">
         {{this.broadcasting ? "Stop Broadcast" : "Start Broadcast"}}
       </button>
+      <button class="btn btn-success btn-broadcast" (click)="commandPlayButton(false)"
+          *ngIf="!broadcasting"
+          [ngClass]="{'btn-danger': broadcasting, 'btn-success': !broadcasting, 'disabled': broadcastLoading}">
+        {{this.broadcasting ? "Stop sharing" : "Share screen"}}
+      </button>
+      <button class="btn btn-success btn-broadcast" (click)="commandPlayButton(false)"
+          *ngIf="broadcasting"
+          [ngClass]="{'btn-danger': broadcasting}">
+        {{"Stop sharing"}}
+      </button>
+
       <p class="playername">
         Your name: <span class="name" (click)="openModalName()">{{pname}}</span> in room: <span class="room">{{room}}</span>.
       </p>

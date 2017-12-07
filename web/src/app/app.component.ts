@@ -1,6 +1,6 @@
 import {Component, OnInit, ViewChild, ElementRef} from '@angular/core';
+import { Participant } from './participant/Participant'
 
-declare var Participant: any;
 declare var DetectRTC: any;
 
 @Component({
@@ -15,6 +15,8 @@ export class AppComponent implements OnInit {
   public participants: object;
   public name: string;
   public broadcasting: boolean;
+  // public broadcastingScreen: boolean;
+  public broadcastLoading: boolean;
   public usersInRoom: object;
   public insideIframe: boolean;
   public isMobile: boolean;
@@ -120,8 +122,8 @@ export class AppComponent implements OnInit {
     }
   }
 
-  public commandPlayButton(): void {
-    var participant = this.participants[this.pid];
+  public commandPlayButton(isCamera: boolean): void {
+    const participant = this.participants[this.pid];
     if (this.broadcasting) {
       this.setBroadcastingState(false);
       // remove local broadcast object from state
@@ -131,22 +133,24 @@ export class AppComponent implements OnInit {
         delete this.participants[this.pid];
         delete this.usersInRoom[this.pid];
         participant.dispose();
-        console.log("Removing local broadcast")
+        console.log("Removed local broadcast")
       }
     } else {
       console.log(this.pid + " registered in room " + this.room);
       if (participant) {
         participant.dispose();
       }
-      participant = new Participant(this.pid, this.send.bind(this), true);
-      this.participants[this.pid] = participant;
-      participant.start().then(this.onBroadcastReady.bind(this));
+      const newParticipant = new Participant(this.pid, true, isCamera, this.send.bind(this));
+      this.participants[this.pid] = newParticipant;
+      newParticipant.start().then(this.onBroadcastReady.bind(this));
+      this.broadcastLoading = true;
       //$('#commandPlayButton').text("Starting...");
     }
   }
 
   private setBroadcastingState(value) {
     this.broadcasting = value;
+    this.broadcastLoading = false;
   }
 
   private scrollChatToBottom(): void {
@@ -193,9 +197,9 @@ export class AppComponent implements OnInit {
     this.send({messageType: "sendTo", toUserId: toUserId, fromUserId: this.pid, value: value, realName: this.pname});
   }
 
-  private receiveVideo(remoteUserId) {
+  private receiveVideo(remoteUserId, isCamera) {
     console.log("receiveVideo remoteUserId:" + remoteUserId);
-    var participant = new Participant(remoteUserId, this.send.bind(this), false);
+    const participant = new Participant(remoteUserId, false, isCamera, this.send.bind(this));
     this.participants[remoteUserId] = participant;
     participant.start();
   }
@@ -216,13 +220,13 @@ export class AppComponent implements OnInit {
 
   private connect(): void {
     try {
-      var pathArray = window.location.pathname.split( '/' );
+      const pathArray = window.location.pathname.split( '/' );
       if (window.location.pathname.length > 1 && pathArray.length >= 2) {
         this.room = pathArray[pathArray.length - 1];
       }
-      var protocol = location.protocol == "https:" ? "wss:" : "ws:";
+      const protocol = location.protocol == "https:" ? "wss:" : "ws:";
       // var url = protocol + "//" + location.host + "/stream/" + room;
-      var url = protocol + "//" + '127.0.0.1:9000' + "/stream/" + this.room;
+      const url = protocol + "//" + location.hostname + ':9000' + "/stream/" + this.room;
       console.log("Connecting to " + url + " from " + window.location.pathname);
       this.socket = new WebSocket(url);
       this.socket.onmessage = this.onSocketMessage.bind(this);
@@ -258,27 +262,27 @@ export class AppComponent implements OnInit {
 
   private doChangeBroadcast(remoteUserId, value): void {
     if (remoteUserId != this.pid) {
-      var existingBroadcast = this.participants[remoteUserId];
+      const existingBroadcast = this.participants[remoteUserId];
 
       if (existingBroadcast && !value) {
         existingBroadcast.dispose();
         delete this.participants[remoteUserId];
         delete this.usersInRoom[remoteUserId];
       } else if (!existingBroadcast && value) {
-        this.receiveVideo(remoteUserId);
+        this.receiveVideo(remoteUserId, true);
       }
     }
   }
 
   private doSendTo(fromUserId, value): void {
-    var participant = this.participants[value.broadcastId];
+    const participant = this.participants[value.broadcastId];
     if (participant) {
       participant[value.method](fromUserId, value);
     }
   }
 
   private onSocketMessage(e): void {
-    var m = JSON.parse(e.data);
+    const m = JSON.parse(e.data);
     console.log("onSocketMessage " + m.messageType + " " + e.data.substr(0, 100));
     if (m.messageType == "youAre") {
       this.pid = m.pid;
@@ -288,8 +292,8 @@ export class AppComponent implements OnInit {
     } else if (m.messageType == "change") {
       if (m.bracket == "user") {
         console.log("user change " + m.id + " " + m.value);
-        var userId = m.id;
-        var participant = this.participants[userId];
+        const userId = m.id;
+        const participant = this.participants[userId];
         if (m.value == null) {
           // delete user
           delete this.usersInRoom[userId];
@@ -309,17 +313,11 @@ export class AppComponent implements OnInit {
             }
           }
         }
-        // users in room
-        var count = 0,
-          list = "";
-        for (var i in this.usersInRoom){
-          count++;
-          list = list + this.usersInRoom[i] + ", ";
-        }
-        this.usersNumber = count;
-        this.usersList = list.slice(0,-2);
+
+        this.usersNumber = Object.keys(this.usersInRoom).length;
+        this.usersList = Object.values(this.usersInRoom).join(', ');
       } else if (m.key.indexOf("broadcast.") == 0) {
-        var broadcastUserId = m.key.split(".")[1];
+        const broadcastUserId = m.key.split(".")[1];
         this.doChangeBroadcast(broadcastUserId, m.value);
       } else if (m.key.indexOf("chat.") == 0) {
         this.chatMessages.push(m);
