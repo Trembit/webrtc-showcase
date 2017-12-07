@@ -1,5 +1,5 @@
 declare var kurentoUtils: any
-// declare var DetectRTC: any;
+declare var DetectRTC: any
 
 /**
  * Creates a video element for a new participant and handles WebRTC logic
@@ -103,21 +103,29 @@ export class Participant {
   }
 
   start() {
-    return new Promise((resolve, reject) => {
-      console.log("Participant:start " + this.userId + " isLocal:" + this.isLocalUser);
-      if (this.isLocalUser) {
-        const constraints = {
-          audio: true,
-          video: {
-            width: 320,
-            framerate: 15
-          }
+    const windowObj: any = window;
+    windowObj.getScreenConstraints = function(sendSource, callback) {
+      console.log('getScreenConstraints invoked', sendSource);
+      const screen_constraints: any = {};
+      if (DetectRTC.browser.name === 'Chrome') {
+        screen_constraints.mandatory = {
+          chromeMediaSource: 'screen'
+          // chromeMediaSourceId: screen_constraints.mandatory.chromeMediaSourceId
         };
+        // TODO
+      }
+      callback(null, screen_constraints);
+    };
+
+    return new Promise((resolve, reject) => {
+      console.log('Participant:start userId:' + this.userId + ', isLocal:' + this.isLocalUser + ', isCamera:' + this.isCamera);
+      if (this.isLocalUser) {
 
         const options = {
           localVideo: this.video,
           onicecandidate: this.onLocalIceCandidate.bind(this),
-          mediaConstraints: constraints
+          mediaConstraints: this.isCamera ? WebRTCConsts.cameraConstraints : WebRTCConsts.screenConstraints,
+          sendSource: this.isCamera ? 'webcam' : 'screen'
         };
 
         this.webRtcPeer = kurentoUtils.WebRtcPeer.WebRtcPeerSendonly(options, (error) => {
@@ -192,4 +200,24 @@ export class Participant {
       console.error(e);
     }
   }
+}
+
+class WebRTCConsts {
+
+  static readonly cameraConstraints = {
+    audio: true,
+    video: {
+      width: 320,
+      framerate: 15
+    }
+  };
+
+  static readonly screenConstraints = {
+    audio: false,
+    video: {
+      mediaSource: "screen",
+      // width: 320,
+      framerate: 3
+    }
+  };
 }
