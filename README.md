@@ -27,7 +27,11 @@ It connects users with Kurento Media Server to implement video chat functionalit
  
  - Install [SBT](http://www.scala-sbt.org/release/docs/Setup.html) tool installed
  
- - Bind local.trembit.com domain in _hosts_ file
+ - Bind _local.trembit.com_ domain in _hosts_ file
+ 
+ - Generate HTTPS certificates and put to nginx/certs `sudo certbot certonly --standalone -d local.trembit.com`
+ 
+ - Generate `openssl dhparam -out nginx/certs/ssl-dhparams.pem 2048`
  
  - Run `sbt run`
  

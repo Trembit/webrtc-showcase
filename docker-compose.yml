@@ -1,6 +1,5 @@
-version: '3.3'
+version: '2.0'
 services:
-
 
   nginx:
     depends_on:
