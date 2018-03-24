@@ -9,7 +9,7 @@ services:
     volumes:
       - ./nginx/certs:/etc/nginx/certs
       - ./nginx/proxy.conf.nginx:/etc/nginx/conf.d/my_proxy.conf
-      - ./nginx/web:/usr/share/nginx/html
+      - ./web/dist:/etc/nginx/html/static
       - ./nginx/vhost.d:/etc/nginx/vhost.d
       - ./nginx/htpasswd:/etc/nginx/htpasswd
       - /var/run/docker.sock:/tmp/docker.sock:ro

@@ -8,7 +8,7 @@ server {
 
     # redirect all HTTP traffic to localhost:9000
     proxy_pass http://localhost:9000;
-      proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Real-IP $remote_addr;
     proxy_set_header Host $host;
     proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
 
@@ -29,13 +29,22 @@ server {
   ssl_certificate /etc/nginx/certs/meetings-bootstrap.trembit.com.bundle.crt;
   ssl_certificate_key /etc/nginx/certs/meetings-bootstrap.trembit.com.key;
 
-  location / {
+  location /static {
+    # switch off logging
+    access_log off;
+
+    root /var/www/app/static/;
+    autoindex off;
+    charset utf-8;
+  }
+
+  location /socket {
     # switch off logging
     access_log off;
 
     # redirect all HTTP traffic to localhost:9000
     proxy_pass http://localhost:9000;
-      proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Real-IP $remote_addr;
     proxy_set_header Host $host;
     proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
 

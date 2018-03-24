@@ -37,3 +37,7 @@ It connects users with Kurento Media Server to implement video chat functionalit
 
 On remote server requires HTTPS to be used. It could be done with nginx proxy and HTTPS certificate generated with Let’s Encrypt.
 https://github.com/JrCs/docker-letsencrypt-nginx-proxy-companion
+
+### Frontend
+ 
+ - Build for deployment `ng build --prod --deploy-url /static --base-href https://local.trembit.com/static/`

@@ -224,9 +224,11 @@ export class AppComponent implements OnInit {
       if (window.location.pathname.length > 1 && pathArray.length >= 2) {
         this.room = pathArray[pathArray.length - 1];
       }
-      const protocol = location.protocol == "https:" ? "wss:" : "ws:";
+      const isHttps = location.protocol == "https:";
+      const protocol = isHttps ? "wss:" : "ws:";
       // var url = protocol + "//" + location.host + "/stream/" + room;
-      const url = protocol + "//" + location.hostname + ':9000' + "/stream/" + this.room;
+      const portPart = location.port ? ":" + location.port : (isHttps ? ":443" : "");
+      const url = protocol + "//" + location.hostname + portPart + "/stream/" + this.room;
       console.log("Connecting to " + url + " from " + window.location.pathname);
       this.socket = new WebSocket(url);
       this.socket.onmessage = this.onSocketMessage.bind(this);

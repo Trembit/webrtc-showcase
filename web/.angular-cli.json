@@ -27,7 +27,6 @@
         "assets/js/bootstrap.min.js",
         "assets/js/adapter.js",
         "assets/js/DetectRTC.js",
-        "assets/js/participant.js",
         "assets/js/kurento-utils.js"
       ],
       "environmentSource": "environments/environment.ts",

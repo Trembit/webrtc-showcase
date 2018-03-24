@@ -19,3 +19,5 @@ GET         /stream/:roomType/:room    controllers.RoomController.webSocket(room
 
 # Map static resources from the /public folder to the /assets URL path
 GET         /assets/*file        controllers.Assets.at(path="/public", file)
+
+GET         /static/*file        controllers.Assets.at(path="/web/dist", file)
