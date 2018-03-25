@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -e
+
 WORKSPACE=$(pwd)
 
 echo "Work dir $WORKSPACE"
