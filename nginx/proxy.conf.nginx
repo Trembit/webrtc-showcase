@@ -7,7 +7,7 @@ server {
   listen 443 ssl;
 
   # host name to respond to
-  server_name local.trembit.com;
+  server_name webrtc-showcase.trembit.com;
 
   # your SSL configuration
   ssl on;
@@ -63,7 +63,7 @@ server {
   listen 8889 ssl;
 
   # host name to respond to
-  server_name local.trembit.com;
+  server_name webrtc-showcase.trembit.com;
 
   # your SSL configuration
   ssl on;
@@ -102,7 +102,7 @@ server {
 
 server {
   listen 80;
-  server_name local.trembit.com;
+  server_name webrtc-showcase.trembit.com;
 
   location / {
     # switch off logging
