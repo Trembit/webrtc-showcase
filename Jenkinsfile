@@ -36,7 +36,7 @@ node {
 
             mkdir -p dist
 
-            docker cp webrtc-showcase-web:/usr/src/app/dist/* ./dist
+            docker cp webrtc-showcase-web:/usr/src/app/dist ./dist
 
             # --rm flag doesn't leave container available. So we manually remove container
             docker rm webrtc-showcase-web
