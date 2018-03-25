@@ -32,7 +32,7 @@ node {
 
             docker run --name webrtc-showcase-web -t webrtc-showcase/web ng build --prod --deploy-url /static --base-href https://webrtc-showcase.trembit.com:5084/static/
 
-            docker cp webrtc-showcase-web:/usr/src/app/dist dist
+            sudo docker cp webrtc-showcase-web:/usr/src/app/dist .
 
             # --rm flag doesn't leave container available. So we manually remove container
             docker rm webrtc-showcase-web
