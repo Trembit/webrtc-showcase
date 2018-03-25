@@ -6,5 +6,6 @@ target
 project/target
 logs
 
-nginx/certs/*
+nginx/certs/*.pem
+nginx/certs/README
 web/node_modules
