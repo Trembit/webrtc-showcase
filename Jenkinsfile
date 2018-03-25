@@ -32,7 +32,7 @@ node {
 
             docker rm webrtc-showcase-web
 
-            docker run --name webrtc-showcase-web -t webrtc-showcase/web ng build --prod --deploy-url /static --base-href https://webrtc-showcase.trembit.com:5084/static/
+            docker run --name webrtc-showcase-web -t webrtc-showcase/web ng build --prod --deploy-url /static --base-href https://webrtc-showcase.trembit.com:5084/static/ && chmod -R a+rwx dist
 
             docker cp webrtc-showcase-web:/usr/src/app/dist .
 
