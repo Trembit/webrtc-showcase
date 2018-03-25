@@ -3,8 +3,8 @@ FROM node:carbon
 WORKDIR /usr/src/app
 
 #https://github.com/angular/angular-cli/issues/7389
-RUN npm install -g @angular/cli@1.5.4 --unsafe
-RUN npm install socket.io rxjs
+#RUN npm install -g @angular/cli --unsafe
+#RUN npm install socket.io rxjs
 
 COPY package*.json ./
 
