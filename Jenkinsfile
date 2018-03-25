@@ -26,11 +26,13 @@ node {
 
             cd "$WORKSPACE/web"
 
-            mkdir -p "$WORKSPACE/web/dist"
+            rm -Rf dist
 
             docker build -t webrtc-showcase/web .
 
-            docker run --rm --name webrtc-showcase-web -v "$WORKSPACE/web":/usr/src/app -t webrtc-showcase/web ng build --prod --deploy-url /static --base-href https://webrtc-showcase.trembit.com:5084/static/
+            docker run --rm --name webrtc-showcase-web -t webrtc-showcase/web ng build --prod --deploy-url /static --base-href https://webrtc-showcase.trembit.com:5084/static/
+
+            docker cp webrtc-showcase-web:/usr/src/app/dist dist
 
             cd "$WORKSPACE"
 
