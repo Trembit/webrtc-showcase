@@ -6,14 +6,11 @@ WORKDIR /usr/src/app
 RUN npm install -g @angular/cli --unsafe
 RUN npm install socket.io rxjs
 
-COPY package*.json ./
+#COPY package*.json ./
 
 RUN npm install
 
-COPY . .
+#COPY . .
 
 #ARG ENV=stage
 
-RUN ng build --prod
-
-CMD [ "ls", "-lah" ]
