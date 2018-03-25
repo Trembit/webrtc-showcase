@@ -22,7 +22,7 @@ node {
 
             docker-compose down || true
 
-            cp -R etc/certs/webrtc-showcase.trembit.com/* nginx/certs/
+            cp -R etc/certs/webrtc-showcase.trembit.com/* "$WORKSPACE/nginx/certs/"
 
             cd "$WORKSPACE/web"
 
