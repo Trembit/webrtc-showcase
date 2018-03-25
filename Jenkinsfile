@@ -26,7 +26,7 @@ node {
 
             cd "$WORKSPACE/web"
 
-            rm -Rf dist
+            #rm -Rf dist
 
             docker build -t webrtc-showcase/web .
 
