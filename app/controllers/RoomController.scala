@@ -45,9 +45,12 @@ object RoomType {
 
 
 @Singleton
-class RoomController @Inject()(userAction: UserAction, cc: ControllerComponents)(implicit system: ActorSystem, mat: Materializer) extends AbstractController(cc) {
+class RoomController @Inject()(
+  @Named("top-actor") topActor: ActorRef,
+  userAction: UserAction,
+  cc: ControllerComponents)(implicit system: ActorSystem, mat: Materializer) extends AbstractController(cc) {
 
-  lazy val topActor = system.actorOf(Props[TopActor], name = "top")
+//  lazy val topActor = system.actorOf(Props[TopActor], name = "top")
 
   val DEFAULT_ROOM_NAME = "default"
 

@@ -1,10 +1,10 @@
 version: '3.3'
 services:
 
+
   nginx:
     depends_on:
      - kurento
-     - playapp
     image: jwilder/nginx-proxy
     volumes:
       - ./nginx/certs:/etc/nginx/certs
@@ -17,11 +17,6 @@ services:
       - 80:80
       - 443:443
       - 8889:8889
-
-  playapp:
-    build: .
-    ports:
-     - 9000:9000
 
   kurento:
     image: kurento/kurento-media-server:6.6.3

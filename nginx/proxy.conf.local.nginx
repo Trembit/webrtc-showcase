@@ -32,10 +32,10 @@ server {
 
     root /etc/nginx/html/;
     index index.html;
-#    autoindex off;
+    #    autoindex off;
     charset utf-8;
 
-#    rewrite "^/static/" /static/index.html last;
+    #    rewrite "^/static/" /static/index.html last;
     rewrite "^/static/admin" /static/index.html last;
     rewrite "^/static/room/\w*" /static/index.html last;
   }
@@ -45,8 +45,7 @@ server {
     access_log off;
 
     # redirect all HTTP traffic to localhost:9000
-#    proxy_pass http://docker.for.mac.localhost:9000/stream;
-    proxy_pass http://playapp:9000/stream;
+    proxy_pass http://docker.for.mac.localhost:9000/stream;
     proxy_set_header X-Real-IP $remote_addr;
     proxy_set_header Host $host;
     proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
@@ -109,7 +108,7 @@ server {
     access_log off;
 
     # redirect all HTTP traffic to localhost:9000
-    proxy_pass http://playapp:9000;
+    proxy_pass http://docker.for.mac.localhost:9000;
     proxy_set_header X-Real-IP $remote_addr;
     proxy_set_header Host $host;
     proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;

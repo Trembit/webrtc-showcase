@@ -1,6 +1,9 @@
 package actor
 
+import javax.inject.Inject
+
 import akka.actor._
+import play.api.Configuration
 
 import scala.collection.mutable
 
@@ -10,7 +13,7 @@ case class GetRoomActor(room: String)
 /**
   * Created by Stan Reshetnyk on 23.03.17.
   */
-class TopActor extends BaseActor with ActorLogging {
+class TopActor @Inject() (configuration: Configuration) extends BaseActor with ActorLogging {
 
   val roomActorRefs = new mutable.HashMap[String, ActorRef]()
 
@@ -25,7 +28,7 @@ class TopActor extends BaseActor with ActorLogging {
   }
 
   def createRoomActor(room: String): ActorRef = {
-    val props = Props(new MeetingActor(room))
+    val props = Props(new MeetingActor(room, configuration))
     val roomActor = context.actorOf(props, name = "room-" + room)
     roomActorRefs.put(room, roomActor)
     context.watch(roomActor)

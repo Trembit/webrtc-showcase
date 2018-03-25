@@ -4,7 +4,7 @@ version := "1.6"
 
 lazy val root = (project in file(".")).enablePlugins(PlayScala)
 
-scalaVersion := "2.12.4"
+scalaVersion := "2.12.3"
 
 scalacOptions ++= Seq("-unchecked", "-feature")
 

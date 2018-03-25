@@ -4,7 +4,7 @@ import actor.utils.{IceCandidateBroadcast, ServerMessage}
 import actor.{MeetingActor, UserInfo}
 import org.kurento.client.WebRtcEndpoint.Builder
 import org.kurento.client._
-import play.api.Logger
+import play.api.{Configuration, Logger}
 
 import scala.collection.mutable
 import scala.util.{Failure, Try}
@@ -22,11 +22,13 @@ case class WebRtcProblem(message: String, broadcastUserId: String) extends Serve
 }
 
 
-class MediaServer(meetingActor: MeetingActor) {
+class MediaServer(meetingActor: MeetingActor, configuration: Configuration) {
 
   private val log = Logger(this.getClass())
 
-  lazy val kurento = KurentoClient.create("wss://local.trembit.com:8889/kurento")
+  lazy val kurentoUrl = configuration.get[String]("kurento.url")
+
+  lazy val kurento = KurentoClient.create(kurentoUrl)
 
   val bandwidth_limits: Boolean = false
   val cpu_optimization: Boolean = false

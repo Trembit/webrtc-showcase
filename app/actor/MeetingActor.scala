@@ -8,13 +8,14 @@ import akka.actor._
 import akka.event.{Logging, LoggingReceive}
 import kurento.{MediaServer, WebRtcProblem}
 import org.kurento.client.internal.server.KurentoServerException
+import play.api.Configuration
 import play.api.libs.json._
 
 import scala.collection.mutable
 import scala.util.{Failure, Success}
 
 
-class MeetingActor(override val roomName: String = "Default") extends BaseActor with ActorLogging with RoomActor {
+class MeetingActor(override val roomName: String = "Default", configuration: Configuration) extends BaseActor with ActorLogging with RoomActor {
 
   /**
    * Users pending verification. Wait for client to send "join" message.
@@ -32,7 +33,7 @@ class MeetingActor(override val roomName: String = "Default") extends BaseActor 
    */
   val roomState = mutable.HashMap[String, JsValue]()
 
-  val mediaServer = new MediaServer(this)
+  val mediaServer = new MediaServer(this, configuration)
 
   def broadcastStatus() = {
     val allUsers = users.values.map(user => user.name).mkString(", ")
