@@ -1,6 +1,6 @@
 upstream docker-kurento {
   server kurento:8888;
-  #server localhost:9000; (have also tried this option)
+  server localhost:9000;
 }
 
 server {

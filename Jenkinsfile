@@ -13,6 +13,8 @@ node {
 
         sh "docker-compose down || true"
 
+        sh "cp -R etc/certs/webrtc-showcase.trembit.com/* nginx/certs"
+
         sh "docker-compose build"
 
         sh "docker-compose up -d"
