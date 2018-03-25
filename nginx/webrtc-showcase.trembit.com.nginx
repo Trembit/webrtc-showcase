@@ -1,6 +1,6 @@
 upstream docker-kurento {
   server kurento:8888;
-  server localhost:9000;
+  server playapp:9000;
 }
 
 server {

@@ -8,7 +8,7 @@ services:
     image: jwilder/nginx-proxy
     volumes:
       - ./nginx/certs:/etc/nginx/certs
-      - ./nginx/proxy.conf.nginx:/etc/nginx/conf.d/my_proxy.conf
+      - ./nginx/webrtc-showcase.trembit.com.nginx:/etc/nginx/conf.d/my_proxy.conf
       - ./web/dist:/etc/nginx/html/static
       - ./nginx/vhost.d:/etc/nginx/vhost.d
       - ./nginx/htpasswd:/etc/nginx/htpasswd
