@@ -396,6 +396,7 @@ function WebRtcPeer(mode, options, callback) {
     if (mode !== 'recvonly' && !videoStream && !audioStream) {
         function getMedia(constraints) {
             if (constraints === undefined) {
+                console.log('Using default media constraints', MEDIA_CONSTRAINTS);
                 constraints = MEDIA_CONSTRAINTS;
             }
             navigator.mediaDevices.getUserMedia(constraints).then(function (stream) {
@@ -1046,7 +1047,7 @@ module.exports = function(stream, options) {
   harker.setInterval = function(i) {
     interval = i;
   };
-  
+
   harker.stop = function() {
     running = false;
     harker.emit('volume_change', -100, threshold);
@@ -1064,12 +1065,12 @@ module.exports = function(stream, options) {
   // and emit events if changed
   var looper = function() {
     setTimeout(function() {
-    
+
       //check if stop has been called
       if(!running) {
         return;
       }
-      
+
       var currentVolume = getMaxVolume(analyser, fftBins);
 
       harker.emit('volume_change', currentVolume, threshold);
@@ -1146,7 +1147,7 @@ if (typeof Object.create === 'function') {
 ;(function(isNode) {
 
 	/**
-	 * Merge one or more objects 
+	 * Merge one or more objects
 	 * @param bool? clone
 	 * @param mixed,... arguments
 	 * @return object
@@ -1159,7 +1160,7 @@ if (typeof Object.create === 'function') {
 	}, publicName = 'merge';
 
 	/**
-	 * Merge two or more objects recursively 
+	 * Merge two or more objects recursively
 	 * @param bool? clone
 	 * @param mixed,... arguments
 	 * @return object

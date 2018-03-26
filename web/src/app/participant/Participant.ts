@@ -205,10 +205,27 @@ export class Participant {
 class WebRTCConsts {
 
   static readonly cameraConstraints = {
-    audio: true,
+    audio: {
+      //Opus is now the default codec for encoding sound in Chrome, Firefox and Safari 11
+      // https://addpipe.com/blog/audio-constraints-getusermedia/
+      sampleSize: 16,
+      channelCount: 2,
+      echoCancellation: true,
+      noiseSuppression: false
+    },
     video: {
-      width: 320,
-      framerate: 15
+      framerate: 15,
+      width: 320
+      // width: 1280,
+      // height: 720
+      // width: {
+      //   min: 1280,
+      //   max: 1280
+      // },
+      // height: {
+      //   min: 720,
+      //   max: 720
+      // }
     }
   };
 

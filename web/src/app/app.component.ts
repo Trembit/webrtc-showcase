@@ -228,7 +228,14 @@ export class AppComponent implements OnInit {
       const protocol = isHttps ? "wss:" : "ws:";
       // var url = protocol + "//" + location.host + "/stream/" + room;
       const portPart = location.port ? ":" + location.port : (isHttps ? ":443" : "");
-      const url = protocol + "//" + location.hostname + portPart + "/stream/" + this.room;
+      const url = (() => {
+        if (location.hostname == "localhost") {
+          return "wss://webrtc-showcase.trembit.com:5084/stream/" + this.room;
+        } else {
+          return protocol + "//" + location.hostname + portPart + "/stream/" + this.room;
+        }
+      })();
+
       console.log("Connecting to " + url + " from " + window.location.pathname);
       this.socket = new WebSocket(url);
       this.socket.onmessage = this.onSocketMessage.bind(this);
@@ -285,7 +292,7 @@ export class AppComponent implements OnInit {
 
   private onSocketMessage(e): void {
     const m = JSON.parse(e.data);
-    console.log("onSocketMessage " + m.messageType + " " + e.data.substr(0, 100));
+    // console.log("onSocketMessage " + m.messageType + " " + e.data.substr(0, 100));
     if (m.messageType == "youAre") {
       this.pid = m.pid;
       console.log("Set pid " + this.pid);
@@ -356,8 +363,7 @@ export class AppComponent implements OnInit {
         this.setError(m.message);
       }
     } else if (m.messageType == "onIceCandidateFound") {
-      console.log("onIceCandidateFound received");
-      console.log(m);
+      // console.log("onIceCandidateFound received", m);
 
       this.participants[m.broadcastUserId].onIceCandidateFound(m);
     } else {
