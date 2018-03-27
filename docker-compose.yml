@@ -18,6 +18,8 @@ services:
 #      - 8889:8889
 
   playapp:
+    depends_on:
+     - kurento
     build: .
     ports:
      - 9000:9000
