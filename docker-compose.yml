@@ -1,4 +1,4 @@
-version: '3.3'
+version: '2'
 services:
 
   nginx:
@@ -31,8 +31,8 @@ services:
      - KMS_STUN_PORT=19302
      - KMS_TURN_URL=webrtc@live.com:muazkh@numb.viagenie.ca
 
-networks:
-  default:
+#networks:
+#  default:
 #    driver: overlay
 
 #  coturn:
