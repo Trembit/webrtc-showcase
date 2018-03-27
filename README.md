@@ -41,3 +41,7 @@ https://github.com/JrCs/docker-letsencrypt-nginx-proxy-companion
 ### Frontend
  
  - Build for deployment `ng build --prod --deploy-url /static --base-href https://local.trembit.com/static/`
+ 
+### Misc
+
+ - Verify that Kurento is up `curl -i -N -H "Connection: Upgrade" -H "Upgrade: websocket" -H "Host: 127.0.0.1:8888" -H "Origin: 127.0.0.1" http://127.0.0.1:8888/kurento`

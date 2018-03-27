@@ -23,13 +23,17 @@ services:
      - 9000:9000
 
   kurento:
-    image: kurento/kurento-media-server:6.6.3
+    image: kurento/kurento-media-server:6.7.0-trusty
     ports:
      - 8888:8888
     environment:
      - KMS_STUN_IP=stun4.l.google.com
      - KMS_STUN_PORT=19302
      - KMS_TURN_URL=webrtc@live.com:muazkh@numb.viagenie.ca
+
+networks:
+  default:
+#    driver: overlay
 
 #  coturn:
 ##    build: coturn
