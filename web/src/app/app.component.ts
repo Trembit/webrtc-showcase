@@ -231,6 +231,8 @@ export class AppComponent implements OnInit {
       const url = (() => {
         if (location.hostname == "localhost") {
           return "wss://webrtc-showcase.trembit.com:5084/stream/" + this.room;
+        } else if (location.port == "4200") {
+          return "ws://" + location.hostname + ":9000/stream/" + this.room;
         } else {
           return protocol + "//" + location.hostname + portPart + "/stream/" + this.room;
         }
