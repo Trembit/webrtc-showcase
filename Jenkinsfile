@@ -22,6 +22,10 @@ node {
 
             docker-compose down || true
 
+            docker rm webrtcshowcase_nginx_1 || true
+
+            docker rmi -f webrtcshowcase_nginx || true
+
             cp -R etc/certs/webrtc-showcase.trembit.com/* "$WORKSPACE/nginx/certs/"
 
             cd "$WORKSPACE/web"
