@@ -4,7 +4,7 @@ upstream docker-kurento {
 }
 
 server {
-  listen 5084 ssl;
+  listen 6000 ssl;
 
   # host name to respond to
   server_name webrtc-showcase.trembit.com;

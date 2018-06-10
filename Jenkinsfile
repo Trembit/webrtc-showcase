@@ -2,7 +2,7 @@ node {
 
     checkout scm
 
-    def port = 5084
+    def port = 6000
     def mode = "stage"
 
     stage ("Build and run docker image") {
@@ -36,7 +36,7 @@ node {
 
             docker rm webrtc-showcase-web || true
 
-            docker run --name webrtc-showcase-web -t webrtc-showcase/web ng build --prod --deploy-url /static --base-href https://webrtc-showcase.trembit.com:5084/static/
+            docker run --name webrtc-showcase-web -t webrtc-showcase/web ng build --prod --deploy-url /static --base-href https://webrtc-showcase.trembit.com:6000/static/
 
             mkdir -p dist
 

@@ -14,7 +14,7 @@ services:
       - ./nginx/htpasswd:/etc/nginx/htpasswd
       - /var/run/docker.sock:/tmp/docker.sock:ro
     ports:
-      - 5084:5084
+      - 6000:6000
 #      - 8889:8889
 
   playapp:
