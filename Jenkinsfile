@@ -31,9 +31,7 @@ node {
 
             docker build -t webrtc-showcase/web .
 
-            # docker rm webrtc-showcase-web || true
-
-            docker run --rm --name webrtc-showcase-web -t webrtc-showcase/web ng build --prod --deploy-url /static --base-href https://dev3.trembit.com:5085/static/
+            docker run --name webrtc-showcase-web -t webrtc-showcase/web ng build --prod --deploy-url /static --base-href https://dev3.trembit.com:5085/static/
 
             mkdir -p dist
 
