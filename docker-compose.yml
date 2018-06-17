@@ -12,7 +12,7 @@ services:
       - ./nginx/htpasswd:/etc/nginx/htpasswd
       - /var/run/docker.sock:/tmp/docker.sock:ro
     ports:
-      - 5085:443
+      - "5085:443"
 #      - 443:443
 #      - 80:80
 
