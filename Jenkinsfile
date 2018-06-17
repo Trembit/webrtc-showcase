@@ -53,6 +53,8 @@ node {
 
             cp -R etc/certs/webrtc-showcase.trembit.com/* "$WORKSPACE/nginx/certs/"
 
+            openssl dhparam -out "$WORKSPACE/nginx/certs/ssl-dhparams.pem" 2048
+
             docker-compose build
 
             # docker cp nginx/webrtc-showcase.trembit.com.nginx webrtc-showcase_nginx_1:/etc/nginx/conf.d/my_proxy.conf
