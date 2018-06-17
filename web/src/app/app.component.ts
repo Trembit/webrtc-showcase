@@ -11,7 +11,7 @@ declare var DetectRTC: any;
 export class AppComponent implements OnInit {
   @ViewChild('chat') private chat: ElementRef;
 
-  public room: string;
+  public room = 'default';
   public participants: object;
   public name: string;
   public broadcasting: boolean;
@@ -41,7 +41,6 @@ export class AppComponent implements OnInit {
   public chatMessages: any[];
 
   public constructor() {
-    this.room = 'default';
     this.participants = {};
     this.name;
     this.broadcasting = false;

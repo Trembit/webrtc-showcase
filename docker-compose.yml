@@ -3,19 +3,18 @@ services:
 
   nginx:
     depends_on:
-     - kurento
      - playapp
     build: ./nginx
     volumes:
       - ./nginx/certs:/etc/nginx/certs
-#      - ./nginx/webrtc-showcase.trembit.com.conf.d/my_proxy.conf:/etc/nginx/conf.d/my_proxy.conf
       - ./web/dist:/etc/nginx/html/static
       - ./nginx/vhost.d:/etc/nginx/vhost.d
       - ./nginx/htpasswd:/etc/nginx/htpasswd
       - /var/run/docker.sock:/tmp/docker.sock:ro
     ports:
-      - 5085:5085
-#      - 8889:8889
+      - 5085:443
+#      - 443:443
+#      - 80:80
 
   playapp:
     depends_on:
@@ -33,7 +32,7 @@ services:
      - KMS_STUN_PORT=19302
      - KMS_TURN_URL=webrtc@live.com:muazkh@numb.viagenie.ca
 
-#networks:
+##networks:
 #  default:
 #    driver: overlay
 

@@ -11,7 +11,7 @@ node {
 
         echo "Building $env.BUILD_ID from $shortCommit"
 
-        //sh "./etc/scripts/redeploy-staging.sh"
+        // sh "./etc/scripts/redeploy-staging.sh"
 
         sh '''
             set -e
@@ -22,21 +22,18 @@ node {
 
             docker-compose down || true
 
-            docker rm webrtcshowcase_nginx_1 || true
 
-            docker rmi -f webrtcshowcase_nginx || true
-
-            cp -R etc/certs/webrtc-showcase.trembit.com/* "$WORKSPACE/nginx/certs/"
+            # Build WEB
 
             cd "$WORKSPACE/web"
 
-            #rm -Rf dist
+            # rm -Rf dist
 
             docker build -t webrtc-showcase/web .
 
-            docker rm webrtc-showcase-web || true
+            # docker rm webrtc-showcase-web || true
 
-            docker run --name webrtc-showcase-web -t webrtc-showcase/web ng build --prod --deploy-url /static --base-href https://webrtc-showcase.trembit.com:5085/static/
+            docker run --rm --name webrtc-showcase-web -t webrtc-showcase/web ng build --prod --deploy-url /static --base-href https://dev3.trembit.com:5085/static/
 
             mkdir -p dist
 
@@ -47,10 +44,22 @@ node {
             # --rm flag doesn't leave container available. So we manually remove container
             docker rm webrtc-showcase-web
 
+
+            # Build NGINX
+
             cd "$WORKSPACE"
+
+            docker rm webrtcshowcase_nginx_1 || true
+
+            docker rmi -f webrtcshowcase_nginx || true
+
+            cp -R etc/certs/webrtc-showcase.trembit.com/* "$WORKSPACE/nginx/certs/"
 
             docker-compose build
 
+            docker cp nginx/webrtc-showcase.trembit.com.nginx webrtc-showcase_nginx_1:/etc/nginx/conf.d/my_proxy.conf
+
+            # Run
             docker-compose up -d
         '''
     }

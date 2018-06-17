@@ -44,3 +44,7 @@ libraryDependencies += specs2 % Test
 scalacOptions in Test ++= Seq("-Yrangepos")
 
 fork in run := true
+
+javaOptions in Universal ++= Seq(
+  "-Dpidfile.path=/dev/null"
+)
