@@ -6,7 +6,7 @@ services:
      - playapp
     build: ./nginx
     volumes:
-      - ./nginx/certs:/etc/nginx/certs
+#      - ./nginx/certs:/etc/nginx/certs
       - ./web/dist:/etc/nginx/html/static
       - ./nginx/vhost.d:/etc/nginx/vhost.d
       - ./nginx/htpasswd:/etc/nginx/htpasswd
