@@ -60,9 +60,9 @@ server {
     #    autoindex off;
     charset utf-8;
 
-    rewrite ^/$               /room/default         redirect;
-    rewrite ^/static/(.*)$    /web/$1?              break;
-    rewrite ^/room/\w*        /web/index.html       break;
-    rewrite ^/\w*             /room/default         redirect;
+    rewrite ^/$               /room/default       redirect;
+    rewrite ^/static/(.*)$    /static/$1?         break;
+    rewrite ^/room/\w*        /static/index.html  break;
+    rewrite ^/\w*             /room/default       redirect;
   }
 }

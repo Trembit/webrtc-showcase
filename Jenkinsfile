@@ -56,6 +56,7 @@ node {
             openssl dhparam -out "$WORKSPACE/nginx/certs/ssl-dhparams.pem" 2048
 
             chmod -R a+rwx "$WORKSPACE/nginx/certs"
+            chmod -R a+rwx "$WORKSPACE/web/dist"
 
             docker-compose build
 

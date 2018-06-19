@@ -7,7 +7,7 @@ services:
     build: ./nginx
     volumes:
 #      - ./nginx/certs:/etc/nginx/certs
-      - ./web/dist:/etc/nginx/html/web
+      - ./web/dist:/etc/nginx/html/static
       - ./nginx/vhost.d:/etc/nginx/vhost.d
       - ./nginx/htpasswd:/etc/nginx/htpasswd
       - /var/run/docker.sock:/tmp/docker.sock:ro
