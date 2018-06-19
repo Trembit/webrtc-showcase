@@ -59,8 +59,6 @@ node {
 
             docker-compose build
 
-            # docker cp nginx/webrtc-showcase.trembit.com.nginx webrtc-showcase_nginx_1:/etc/nginx/conf.d/my_proxy.conf
-
             # Run
             docker-compose up -d
         '''

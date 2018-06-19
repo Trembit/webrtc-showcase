@@ -8,7 +8,7 @@ server {
   listen 80 default_server;
   listen [::]:80 default_server;
   server_name local.trembit.com webrtc-showcase.trembit.com;
-  return 301 https://$host$request_uri;
+  return 301 https://$host:5085$request_uri;
 }
 
 
