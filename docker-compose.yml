@@ -31,9 +31,9 @@ services:
     ports:
      - 8888:8888
     environment:
-     - KMS_STUN_IP=stun4.l.google.com
-     - KMS_STUN_PORT=19302
-     - KMS_TURN_URL=webrtc@live.com:muazkh@numb.viagenie.ca
+     - KMS_STUN_IP=stun:stun.xten.com
+     - KMS_STUN_PORT=3478
+#     - KMS_TURN_URL=webrtc@live.com:muazkh@numb.viagenie.ca
 
 ##networks:
 #  default:
