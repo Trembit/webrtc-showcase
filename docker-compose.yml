@@ -31,6 +31,7 @@ services:
     ports:
      - 8888:8888
     environment:
+    # Check STUN/TURN server with https://webrtc.github.io/samples/src/content/peerconnection/trickle-ice/
      - KMS_STUN_IP=stun:stun.xten.com
      - KMS_STUN_PORT=3478
 #     - KMS_TURN_URL=webrtc@live.com:muazkh@numb.viagenie.ca
