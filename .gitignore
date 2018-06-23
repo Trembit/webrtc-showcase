@@ -6,10 +6,6 @@ target
 project/target
 logs
 
-# To speedup scala compile
-.sbt
-.ivy2
-
 nginx/certs/*.pem
 nginx/certs/README
 web/node_modules
